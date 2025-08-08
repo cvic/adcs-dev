@@ -1,19 +1,21 @@
 {
-	"name": "absolute-antimatter",
-	"description": "A starter for Astro with i18n support",
+	"name": "adcs-dev",
+	"description": "Development version for adcs.ro",
 	"version": "3.0.0",
 	"license": "MIT",
-	"homepage": "https://astro-i18n-starter.pages.dev/",
+	"homepage": "https://adcs-dev.cvic.workers.dev",
 	"engines": {
 		"node": ">=20"
 	},
 	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev --open",
-		"build": "astro check && astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
+    		"astro": "astro",
+    		"build": "astro build",
+    		"cf-typegen": "wrangler types",
+    		"check": "astro build && tsc && wrangler deploy --dry-run",
+    		"deploy": "wrangler deploy",
+    		"dev": "astro dev",
+    		"preview": "astro build && wrangler dev"
+  	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.4",
 		"@astrojs/mdx": "^4.2.4",
