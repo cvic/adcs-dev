@@ -10,6 +10,7 @@
 	"scripts": {
 		"dev": "astro dev",
 		"build": "astro build",
+		"deploy": "astro build && wrangler pages deploy ./dist",
 		"postbuild": "pagefind --site dist",
 		"format": "prettier -w ./src"
 	},
