@@ -8,21 +8,25 @@
 		"node": ">=20"
 	},
 	"scripts": {
-    		"dev": "astro dev",
-    		"build": "astro build",
-    		"postbuild": "pagefind --site dist",
-    		"format": "prettier -w ./src"
-  	},
+		"dev": "astro dev",
+		"build": "astro build",
+		"postbuild": "pagefind --site dist",
+		"format": "prettier -w ./src"
+	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.4",
+		"@astrojs/cloudflare": "^12.6.3",
 		"@astrojs/mdx": "^4.2.4",
 		"@astrojs/rss": "^4.0.11",
 		"@astrojs/sitemap": "^3.3.0",
 		"astro": "^5.7.3",
-		"typescript": "^5.4.5",
+		"pagefind": "^1.0.4",
 		"prettier": "^3.0.1",
-    		"prettier-plugin-astro": "^0.11.0",
-    		"prettier-plugin-tailwindcss": "^0.4.1",
-		"pagefind": "^1.0.4"
+		"prettier-plugin-astro": "^0.11.0",
+		"prettier-plugin-tailwindcss": "^0.4.1",
+		"typescript": "^5.4.5"
+	},
+	"devDependencies": {
+		"wrangler": "^4.28.1"
 	}
 }
