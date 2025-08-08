@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "adcs-dev",
+  "pages_build_output_dir": "./dist",
   // Update to today's date
   "compatibility_date": "2025-07-01",
   "assets": {
