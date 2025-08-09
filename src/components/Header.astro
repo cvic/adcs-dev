@@ -63,6 +63,15 @@ const isActive = (path: string) =>
           {t({ en: "Blog", ro: "Blog" })}
         </a>
       </li>
+
+      <li>
+        <a
+          href={getRelativeLocaleUrl(locale, "/partners")}
+          class={isActive("/partners") ? "active" : null}
+        >
+          {t({ en: "Partners", ro: "Parteneri" })}
+        </a>
+      </li>
     </ul>
   </nav>
 </header>
