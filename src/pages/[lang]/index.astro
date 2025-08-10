@@ -6,6 +6,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 
 import heroImageEn from "@/assets/en/hero.svg";
 import heroImageRo from "@/assets/ro/hero.svg";
+import adcsLogo from "@/assets/adcs-logo.jpg";
 import { Image } from "astro:assets";
 
 const locale = Astro.currentLocale as Lang;
@@ -18,28 +19,13 @@ export const getStaticPaths = () =>
 
 <Layout>
   <Image
-    src={locale === "ro" ? heroImageRo : heroImageEn}
+    src={locale === "ro" ? adcsLogo : adcsLogo}
     alt={t({
       en: "Hello",
       ro: "Salut",
     })}
     loading="eager"
   />
-
-  <p>
-    <a
-      href={`https://docs.astro.build/${locale}/guides/internationalization/`}
-      target="_blank"
-    >
-      {
-        t({
-          en: "Internationalization (i18n) Routing | Astro Docs",
-          ro: "Rutare internaționalizare (i18n) | Documentație Astro",
-        })
-      }
-      <span class="material-icons-sharp dir">open_in_new</span>
-    </a>
-  </p>
 
   <p>
     {
