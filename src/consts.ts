@@ -6,8 +6,8 @@ import type { Multilingual } from "@/i18n";
 export const SITE_TITLE: string | Multilingual = "Asociatia de Cautare Salvare";
 
 export const SITE_DESCRIPTION: string | Multilingual = {
-	en: "A starter template for Astro with i18n support.",
-	ro: "Un template de inceput pentru Astro cu suport i18n",
+	en: "Asociația de Căutare Salvare - ADCS",
+	ro: "Asociația de Căutare Salvare - ADCS",
 };
 
 export const X_ACCOUNT: string | Multilingual = "@psephopaiktes";
