@@ -1,10 +1,9 @@
 /* define the layout and structure of the entire page */
 
-.l-header {
-}
+.l-header {}
 
 .l-main {
-	margin-block-start: var(--sp-l);
+	/* margin-block-start: var(--sp-l); */
 }
 
 .l-content {
@@ -16,5 +15,5 @@
 .l-footer {
 	position: sticky;
 	top: 100vh;
-	margin-block-start: calc(var(--sp-l) * 2);
+
 }
