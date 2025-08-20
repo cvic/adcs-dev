@@ -5,6 +5,7 @@ description: "Request assistance from the community"
 ---
 
 import PageHeadline from "@/components/PageHeadline.astro";
+import AlertHelpForm from "@/components/AlertHelpForm.astro";
 import { SITE_TITLE } from "@/consts";
 import "@/styles/help.css";
 
@@ -12,31 +13,8 @@ import "@/styles/help.css";
 
 <section class="request-help">
 
-{" "}
-
-<div class="alert_important">
-  <p>
-    <span class="red">**IMPORTANT!**</span> This system is not an emergency
-    service. If the situation is critical, call <span class="red">**112**</span>
-    !
-  </p>
-  <p>
-    This page is for those who need help from the community — the response time
-    is **not guaranteed**.
-  </p>
-  <p>
-    Your browser will display a message asking for access to your GPS location.
-    Allow access for the most accurate location.
-  </p>
-  <p>
-    Fields marked with <span class="red">*</span> are **mandatory**.
-  </p>
-  <p>
-    After submitting the form, members in your area will be automatically
-    notified by SMS and email!
-  </p>
-</div>
-
+  <AlertHelpForm />
+  
   <form id="help-form">
 
         <div class="legend_title">☎️ Contact Information</div>

@@ -10,23 +10,6 @@
   display: flex;
 }
 
-.red {
-  color: var(--color-danger, #e00);
-}
-
-.alert_important {
-  background: color-mix(in srgb, red 15%, white);
-  border-left: 4px solid var(--color-danger, #e00);
-  padding: var(--sp-s, 1rem);
-  font-weight: 600;
-  display: block;
-  /* <-- use block */
-  box-sizing: border-box;
-  /* ensures padding doesn’t cause overflow */
-  width: 100%;
-  /* makes it fluid */
-}
-
 #help-form {
   background: white;
   padding: 1rem;

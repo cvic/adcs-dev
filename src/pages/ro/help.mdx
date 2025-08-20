@@ -4,30 +4,15 @@ title: Solicită asistență
 description: "Solicită asistență de la comunitate"
 ---
 import PageHeadline from "@/components/PageHeadline.astro";
+import AlertHelpForm from "@/components/AlertHelpForm.astro";
 import { SITE_TITLE } from "@/consts";
 import "@/styles/help.css";
 
 <PageHeadline title={frontmatter.title} />
 
-
 <section class="request-help">
-  <h1>Solicită asistență</h1>
 
-  <p class="alert-important">
-    **IMPORTANT!** Acest sistem nu este unul de urgență. Dacă situația este critică, apelează **112**!
-  </p>
-
-  <p>
-    Această pagină este adresată celor care au nevoie de ajutor din partea comunității — timpul de răspuns **nu este garantat**.
-  </p>
-
-  <p>
-    Browser-ul va afișa un mesaj pentru a solicita acces la locația ta GPS. Confirmă accesul pentru o localizare cât mai precisă. Câmpurile marcate cu * sunt **obligatorii**.
-  </p>
-
-  <p>
-    După trimiterea formularului, membrii din zona ta vor fi automat notificați prin SMS și email!
-  </p>
+  <AlertHelpForm />
 
   <form class="help-form">
     <fieldset>

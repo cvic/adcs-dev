@@ -3,6 +3,7 @@
 
 import LocaleSelect from "@/components/i18n/LocaleSelect.astro";
 import { Image } from "astro:assets";
+
 import { useTranslations, type Lang } from "@/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
 const t = useTranslations(Astro.currentLocale as Lang);
@@ -18,7 +19,6 @@ const isActive = (path: string) =>
 
 <header class="l-header">
   <h1 dir="ltr">
-
        <Image
           src={locale === "ro" ? adcsLogo : adcsLogo}
           alt={t({
