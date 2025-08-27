@@ -19,24 +19,23 @@ const isActive = (path: string) =>
 
 <header class="l-header">
   <h1 dir="ltr">
-       <Image
-          src={locale === "ro" ? adcsLogo : adcsLogo}
-          alt={t({
-            en: "Hello",
-            ro: "Salut",
-          })}
-          class="logo_header"
-        loading="eager"
-        />
-    <a href={getRelativeLocaleUrl(locale, "/")} class="text_header" >
-     A.D.C.S.
+    <Image
+      src={locale === "ro" ? adcsLogo : adcsLogo}
+      alt={t({
+        en: "Hello",
+        ro: "Salut",
+      })}
+      class="logo_header"
+      loading="eager"
+    />
+    <a href={getRelativeLocaleUrl(locale, "/")} class="text_header">
+      A.D.C.S.
     </a>
   </h1>
 
   <LocaleSelect />
 
   <nav class="l-content">
-  
     <ul>
       <li>
         <a
@@ -47,7 +46,7 @@ const isActive = (path: string) =>
         </a>
       </li>
 
-    <li>
+      <li>
         <a
           href={getRelativeLocaleUrl(locale, "/help")}
           class={isActive("/help") ? "active" : null}
@@ -150,7 +149,7 @@ const isActive = (path: string) =>
       letter-spacing: 0.05em;
       padding-block: 0.2em;
       padding-inline: 0.4em;
-      border-radius: 4px;
+
       &:hover,
       &:active {
         background-color: color-mix(
@@ -162,6 +161,7 @@ const isActive = (path: string) =>
       &.active {
         pointer-events: none;
         color: var(--color-theme);
+        border: 1px solid var(--color-accent);
       }
 
       .material-icons-sharp {

@@ -3,107 +3,122 @@ import { useTranslations, type Lang } from "@/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
 const t = useTranslations(Astro.currentLocale as Lang);
 const locale = Astro.currentLocale as Lang;
-
 ---
 
 <div class="alert_important">
   <p>
     <span class="red">
-    {t(
-      {en: "IMPORTANT! This is not an emergency request.If the situation is critical, call 911!",
-       ro: "IMPORTANT! Acest sistem nu este unul de urgență. Dacă situația este critică, apelează 112!"
-    })}
+      {
+        t({
+          en: "IMPORTANT! This is not an emergency request.If the situation is critical, call 911!",
+          ro: "IMPORTANT! Acest sistem nu este unul de urgență. Dacă situația este critică, apelează 112!",
+        })
+      }
     </span>
-    <button id="more_info_button" onClick={`showMoreInfo`}>  ▼ </button>
+    <button id="more_info_button" onClick={`showMoreInfo`}> ▼</button>
   </p>
   <p class="more_info">
-     {t(
-      {en: "This page is for those who need help from the community — the response is **not guaranteed**",
-       ro: "Această pagină este adresată celor care au nevoie de ajutor din partea comunității — timpul de răspuns **nu este garantat**."
-     })}
+    {
+      t({
+        en: "This page is for those who need help from the community — the response is **not guaranteed**",
+        ro: "Această pagină este adresată celor care au nevoie de ajutor din partea comunității — timpul de răspuns **nu este garantat**.",
+      })
+    }
   </p>
   <p class="more_info">
-     {t(
-      {en: " Your browser will display a message asking for access to your GPS location. Allow access for the most accurate location.",
-       ro: " Browser-ul va afișa un mesaj pentru a solicita acces la locația ta GPS. Confirmă accesul pentru o localizare cât mai precisă."
-     })}
+    {
+      t({
+        en: " Your browser will display a message asking for access to your GPS location. Allow access for the most accurate location.",
+        ro: " Browser-ul va afișa un mesaj pentru a solicita acces la locația ta GPS. Confirmă accesul pentru o localizare cât mai precisă.",
+      })
+    }
   </p>
   <p class="more_info">
-     {t(
-      {en: " Fields marked with a red * are **mandatory**.",
-       ro: " Câmpurile marcate cu * rosie sunt **obligatorii**"
-     })}
+    {
+      t({
+        en: " Fields marked with a red * are **mandatory**.",
+        ro: " Câmpurile marcate cu * rosie sunt obligatorii",
+      })
+    }
   </p>
   <p class="more_info">
-         {t(
-          {en: "  After submitting the form, members in your area will be automatically notified by SMS and email!",
-           ro: "  După trimiterea formularului, membrii din zona ta vor fi automat notificați prin SMS și email!"
-         })}
+    {
+      t({
+        en: "  After submitting the form, members in your area will be automatically notified by SMS and email!",
+        ro: "  După trimiterea formularului, membrii din zona ta vor fi automat notificați prin SMS și email!",
+      })
+    }
   </p>
 </div>
 
 <style>
-.red {
-  color: var(--color-caution, #e00);
+  .red {
+    color: var(--color-caution, #e00);
+    font-size: 1rem;
+    font-family: Ubuntu;
+    text-align: center;
+    padding: 2rem;
+  }
 
-  font-size:1rem;
-}
-
-.alert_important {
-  background: color-mix(in srgb, red 15%, white);
-  border-left: 4px solid var(--color-danger, #e00);
-  padding: 1rem;
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  font-size:0.9rem;
-  text-align:center;
-}
-
-#more_info_button{
+  .alert_important {
+    background: linear-gradient(
+      0.5turn,
+      var(--color-theme),
+      50%,
+      var(--color-base)
+    );
+    padding: 1rem;
     display: block;
-    width: 10rem;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 0.9rem;
+    text-align: center;
+    border-radius: 4px;
+  }
+
+  #more_info_button {
+    display: block;
+    width: 5rem;
     padding: 0.3em;
     border-radius: 0.5em;
-    background: var(--color-theme);
+    background: var(--color-main);
     color: var(--color-base);
     text-decoration: none;
-    font-size:10px;
+    font-size: 10px;
 
     margin: 0 auto;
-    margin-top:1rem;
-    margin-bottom:1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 
-}
-
-.more_info {
+  .more_info {
     opacity: 0;
     max-height: 0;
     overflow: hidden;
-    transition: opacity 1s ease, max-height 1s ease;
+    transition:
+      opacity 1s ease,
+      max-height 1s ease;
     display: block; /* keep layout consistent */
-    margin:0;
-    text-align:justify;
-    font-size:0.7rem;
-}
+    margin: 0;
+    text-align: justify;
+    font-size: 0.7rem;
+  }
 
-.more_info.visible {
+  .more_info.visible {
     opacity: 1;
-    max-height: 10rem; /* adjust based on content size */
-}
-
+    max-height: 100%; /* adjust based on content size */
+  }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const button = document.getElementById("more_info_button");
-    button.addEventListener("click", () => {
-      document.querySelectorAll('.more_info').forEach((elem) => {
-        elem.classList.toggle('visible');
+    button?.addEventListener("click", () => {
+      document.querySelectorAll(".more_info").forEach((elem) => {
+        elem.classList.toggle("visible");
       });
 
-       button.textContent =
-              button.textContent.includes("▼") ? "▲" : "▼";
+      button.textContent = button.textContent.includes("▼") ? "▲" : "▼";
     });
   });
 </script>

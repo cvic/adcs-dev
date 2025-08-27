@@ -1,0 +1,53 @@
+---
+import { useTranslations, type Lang } from "@/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+import SelectCounties from "./HelpFormComponents/SelectCounties.astro";
+import AndDivider from "./HelpFormComponents/AndDivider.astro";
+import GeoLocation from "./HelpFormComponents/GeoLocation.astro";
+import Details from "./HelpFormComponents/Details.astro";
+import FileUpload from "./HelpFormComponents/FileUpload.astro";
+import TermsAndConditions from "./HelpFormComponents/TermsAndConditions.astro";
+
+const t = useTranslations(Astro.currentLocale as Lang);
+const locale = Astro.currentLocale as Lang;
+---
+
+<form id="form-help" class="more_info">
+  <div class="row">
+    <SelectCounties selected="B" />
+    <AndDivider />
+    <GeoLocation />
+  </div>
+
+  <div class="row">
+    <Details />
+  </div>
+
+  <div class="row">
+    <FileUpload />
+  </div>
+
+  <div class="row">
+    <TermsAndConditions />
+  </div>
+</form>
+
+<style>
+  #form-help {
+    padding: 1rem;
+    //background: linear-gradient(
+      0.5turn,
+      var(--color-base),
+      90%,
+      var(--color-accent)
+    );
+    background-color: color-mix(in srgb, var(--color-base) 70%, transparent);
+  }
+
+  .row {
+    margin-top: 2rem;
+    border-left: 2px solid var(--color-theme);
+    padding-left: 0.5rem;
+  }
+</style>

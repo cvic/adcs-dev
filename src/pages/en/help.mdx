@@ -6,97 +6,15 @@ description: "Request assistance from the community"
 
 import PageHeadline from "@/components/PageHeadline.astro";
 import AlertHelpForm from "@/components/AlertHelpForm.astro";
+import HelpForm from "@/components/HelpForm.astro";
 import { SITE_TITLE } from "@/consts";
-import "@/styles/help.css";
 
 <PageHeadline title={frontmatter.title} />
 
 <section class="request-help">
 
-  <AlertHelpForm />
-  
-  <form id="help-form">
-
-        <div class="legend_title">☎️ Contact Information</div>
-
-        <div class="row">
-            <legend>Location <span class="red">*</span>:</legend>
-            <select name="county" required class="select_country">
-                  <option value="">-- Select county --</option>
-                  {[
-                    "Alba","Arad","Argeș","Bacău","Bihor","Bistrița-Năsăud","Botoșani","Brăila",
-                    "Brașov","Bucharest","Buzău","Călărași","Caraș-Severin","Cluj","Constanța",
-                    "Covasna","Dâmbovița","Dolj","Galați","Giurgiu","Gorj","Harghita","Hunedoara",
-                    "Ialomița","Iași","Ilfov","Maramureș","Mehedinți","Mureș","Neamț","Olt",
-                    "Prahova","Sălaj","Satu Mare","Sibiu","Suceava","Teleorman","Timiș","Tulcea",
-                    "Vâlcea","Vaslui","Vrancea"
-                  ].map((county) => (
-                    <option value={county}>{county}</option>
-                  ))}
-            </select>
-        <div class="divider">
-          <span>or</span>
-        </div>
-
-        <table class="no_borders">
-            <tr class="no_borders">
-                <td class="no_borders">
-                    <div id="coords">
-                        <span class="coord_text">Latitude: &nbsp;<span id="lat"> — </span></span><br/>
-                        <span class="coord_text">Longitude: &nbsp; <span id="lon"> — </span></span>
-                    </div>
-                </td>
-                <td class="no_borders">
-                  <button
-                    type="button"
-                    onClick={`navigator.geolocation.getCurrentPosition((pos) => {
-                      document.getElementById('lat').textContent =  pos.coords.latitude.toFixed(6);
-                      document.getElementById('lon').textContent =  pos.coords.longitude.toFixed(6);
-                    })`}
-                    class="coord_button"
-                  >
-                    Use my current location
-                  </button>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="row">
-      <legend>Vehicle and Request Details<span class="red">*</span>:</legend>
-      <textarea name="details" placeholder="Describe the vehicle and the situation..." required class="textarea_details" />
-    </div>
-
-    <div class="row">
-          <legend>Photos:</legend>
-        <div class="upload_files">
-          <input type="file" name="photos" accept="image/*" multiple />
-          <p class="note">Avoid showing license plates or faces.</p>
-        </div>
-      </div>
-
-      <div class="row">
-          <legend>Terms and Conditions<span class="red">*</span>:</legend>
-          <div class="border_terms">
-            <input type="checkbox" name="accept" required class="checkbox_box" />
-            <span class="checkbox_text"> I agree that I am requesting help from the A.D.C.S. community and that I am not in a critical situation requiring a call to the emergency number 112. I understand that my request may be rejected if it does not fall within the scope of A.D.C.S. activities. I agree that volunteers are not liable for any damages, and that my data (name, phone number, location) will be made available to the community.</span>
-            </div>
-      </div>
-
-      <div class="row_button ">
-          <button type="submit"  onClick={`
-          document.getElementById('help-form').remove();
-          document.getElementById('form_sent').style.display = 'block';`
-          } >⛑️ Submit</button>
-          <p class="note-submission">The request is sent automatically — do not close the page!</p>
-      </div>
-
-  </form>
-
 {" "}
-
-<div id="form_sent">
-  <div class="row">Your request has been sent and being processed!</div>
-</div>
+<AlertHelpForm />
+<HelpForm />
 
 </section>

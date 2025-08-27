@@ -1,0 +1,37 @@
+---
+const { onCoordinates } = Astro.props || {}; // optional callback
+
+import { useTranslations, type Lang } from "@/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+const t = useTranslations(Astro.currentLocale as Lang);
+const locale = Astro.currentLocale as Lang;
+---
+
+<div id="geo-output" class="p-4 border rounded">
+  <p id="coords-text">
+    {t({ en: "Getting your location...", ro: "Preluam coordonatele..." })}
+  </p>
+</div>
+
+<script type="module">
+  const output = document.getElementById("coords-text");
+
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        output.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+
+        // Optional: send coordinates to Astro props callback
+        if (typeof window.onCoordinates === "function") {
+          window.onCoordinates({ latitude, longitude });
+        }
+      },
+      (err) => {
+        output.textContent = `Error getting location: ${err.message}`;
+      }
+    );
+  } else {
+    output.textContent = "Geolocation is not supported by your browser.";
+  }
+</script>

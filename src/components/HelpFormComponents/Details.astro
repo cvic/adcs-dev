@@ -1,0 +1,58 @@
+---
+import { useTranslations, type Lang } from "@/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+const t = useTranslations(Astro.currentLocale as Lang);
+const locale = Astro.currentLocale as Lang;
+---
+
+<div class="">
+  {
+    t({
+      en: "Request details",
+      ro: "Informații despre solicitare",
+    })
+  }
+  <span class="red">*</span>:
+</div>
+<label>
+  <span class="material-icons-sharp">dashboard</span>
+  <textarea
+    name="details"
+    placeholder="Describe the vehicle and the situation..."
+    required></textarea>
+</label>
+
+<style>
+  label {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align-last: left;
+    .material-icons-sharp {
+      pointer-events: none;
+      position: absolute;
+      color: var(--color-theme);
+      &:first-child {
+        font-size: 24px;
+        inset: 8px auto 8px 8px;
+        opacity: 0.4;
+      }
+      &:last-child {
+        font-size: 28px;
+        inset: 6px 6px 6px auto;
+      }
+    }
+  }
+  textarea {
+    width: 100%;
+    height: 10rem;
+    padding-inline: 38px;
+    cursor: pointer;
+    appearance: none;
+    border-radius: 6px;
+    font-family: "Noto Sans";
+    color: var(--color-main);
+    background-color: var(--color-base);
+    border: 2px solid var(--color-theme);
+  }
+</style>

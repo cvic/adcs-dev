@@ -19,7 +19,7 @@
 .l-header {}
 
 .l-main {
-	/* margin-block-start: var(--sp-l); */
+	border: 2px solid black;
 }
 
 .l-content {
