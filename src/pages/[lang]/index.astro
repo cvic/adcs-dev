@@ -1,12 +1,12 @@
 ---
 import { LOCALES, useTranslations, type Lang } from "@/i18n";
-import Layout from "@/layouts/Base.astro";
+import Layout from "@/layouts/Article.astro";
 const t = useTranslations(Astro.currentLocale as Lang);
 import { getRelativeLocaleUrl } from "astro:i18n";
 
-import heroImageEn from "@/assets/en/hero.svg";
-import heroImageRo from "@/assets/ro/hero.svg";
 import adcsLogo from "@/assets/adcs-logo.jpg";
+import backgroundImage from "@/assets/background_light.png";
+
 import { Image } from "astro:assets";
 
 const locale = Astro.currentLocale as Lang;
@@ -18,73 +18,9 @@ export const getStaticPaths = () =>
 ---
 
 <Layout>
-  <Image
-    src={locale === "ro" ? adcsLogo : adcsLogo}
-    alt={t({
-      en: "Hello",
-      ro: "Salut",
-    })}
-    loading="eager"
-  />
-
-  <p>
-    {
-      t({
-        en: "If you got stuck or you need the help of A.D.C.S. community, click the button below. It is very important that you provide accurate information.",
-        ro: "Daca ai rămas împotmolit sau ai nevoie de asistența comunității A.D.C.S., apasă butonul de mai jos. Este important ca datele pe care le furnizezi să fie cât mai precise.",
-      })
-    }
-  </p>
-
-  <p>
-    {
-      t({
-        en: "Ask for help",
-        ro: "Solicita ajutor",
-      })
-    }
-  </p>
-
-  <p>
-    <a href={getRelativeLocaleUrl(locale, "help")} class="start">
-      <span class="material-icons-sharp dir">arrow_forward</span>
-      {
-        t({
-          en: "⛑️   Request help now",
-          ro: "⛑️   Solicită asistență acum",
-        })
-      }
-    </a>
-  </p>
+  <div>
+    <Image src={backgroundImage} alt="bg.png" loading="eager" />
+  </div>
 </Layout>
 
-<style>
-  ul {
-    margin-block-start: var(--sp-s);
-    list-style: disc;
-    padding-inline-start: 1em;
-  }
-
-  h2 {
-    color: var(--color-theme);
-    margin-block-start: var(--sp-l);
-  }
-
-  em {
-    display: block;
-    font-style: normal;
-    font-size: 1.3em;
-    margin-block-end: var(--sp-m);
-  }
-
-  .start {
-    display: block;
-    width: fit-content;
-    padding: 0.5em;
-    border-radius: 0.5em;
-    background: var(--color-main);
-    color: var(--color-base);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-  }
-</style>
+<style></style>

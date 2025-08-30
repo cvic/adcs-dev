@@ -3,88 +3,19 @@ layout: "@/layouts/Article.astro"
 title: Request Assistance
 description: "Request assistance from the community"
 ---
+
 import PageHeadline from "@/components/PageHeadline.astro";
+import AlertHelpForm from "@/components/HelpFormComponents/AlertHelpForm.astro";
+import HelpForm from "@/components/HelpFormComponents/HelpForm.astro";
 import { SITE_TITLE } from "@/consts";
-import "@/styles/help.css";
 
 <PageHeadline title={frontmatter.title} />
 
 <section class="request-help">
-  <h1>Request Assistance</h1>
 
-  <p class="alert-important">
-    **IMPORTANT!** This system is not an emergency service. If the situation is critical, call **112**!
-  </p>
+{" "}
 
-  <p>
-    This page is for those who need help from the community — the response time is **not guaranteed**.
-  </p>
+<AlertHelpForm />
+<HelpForm />
 
-  <p>
-    Your browser will display a message asking for access to your GPS location. Allow access for the most accurate location. Fields marked with * are **mandatory**.
-  </p>
-
-  <p>
-    After submitting the form, members in your area will be automatically notified by SMS and email!
-  </p>
-
-  <form class="help-form">
-    <fieldset>
-      <legend>☎️ Contact Information</legend>
-    </fieldset>
-
-    <fieldset>
-      <legend>Location</legend>
-      <select name="county" required>
-        <option value="">-- Select county --</option>
-        {[
-          "Alba","Arad","Argeș","Bacău","Bihor","Bistrița-Năsăud","Botoșani","Brăila",
-          "Brașov","Bucharest","Buzău","Călărași","Caraș-Severin","Cluj","Constanța",
-          "Covasna","Dâmbovița","Dolj","Galați","Giurgiu","Gorj","Harghita","Hunedoara",
-          "Ialomița","Iași","Ilfov","Maramureș","Mehedinți","Mureș","Neamț","Olt",
-          "Prahova","Sălaj","Satu Mare","Sibiu","Suceava","Teleorman","Timiș","Tulcea",
-          "Vâlcea","Vaslui","Vrancea"
-        ].map((county) => (
-          <option value={county}>{county}</option>
-        ))}
-      </select>
-
-      <div id="coords">
-        <label>Latitude: <span id="lat">—</span></label>
-        <label>Longitude: <span id="lon">—</span></label>
-      </div>
-
-      <button
-        type="button"
-        onClick={`navigator.geolocation.getCurrentPosition((pos) => {
-          document.getElementById('lat').textContent = pos.coords.latitude.toFixed(6);
-          document.getElementById('lon').textContent = pos.coords.longitude.toFixed(6);
-        })`}
-      >
-        Use my current location
-      </button>
-    </fieldset>
-
-    <fieldset>
-      <legend>Vehicle and Request Details</legend>
-      <textarea name="details" placeholder="Describe the vehicle and the situation..." required />
-    </fieldset>
-
-    <fieldset>
-      <legend>Photos (optional)</legend>
-      <input type="file" name="photos" accept="image/*" multiple />
-      <p class="note">Avoid showing license plates or faces.</p>
-    </fieldset>
-
-    <fieldset>
-      <legend>Terms and Conditions</legend>
-      <label>
-        <input type="checkbox" name="accept" required />
-        I agree that I am requesting help from the A.D.C.S. community and that I am not in a critical situation requiring a call to the emergency number 112. I understand that my request may be rejected if it does not fall within the scope of A.D.C.S. activities. I agree that volunteers are not liable for any damages, and that my data (name, phone number, location) will be made available to the community.
-      </label>
-    </fieldset>
-
-    <button type="submit">⛑️ Submit</button>
-    <p class="note-submission">The request is sent automatically — do not close the page!</p>
-  </form>
 </section>

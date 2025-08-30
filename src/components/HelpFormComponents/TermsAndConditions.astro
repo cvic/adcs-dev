@@ -1,0 +1,61 @@
+---
+/**
+ * Props:
+ * - text: string (the Terms & Conditions text)
+ * - checkboxLabel: string (label near the checkbox)
+ * - required: boolean (force checkbox for form validation)
+ * - name: string (form field name)
+ */
+
+import { useTranslations, type Lang } from "@/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+const t = useTranslations(Astro.currentLocale as Lang);
+const locale = Astro.currentLocale as Lang;
+
+const {
+  text = t({
+    en: " I agree that I am requesting help from the A.D.C.S. community and that I am not in a critical situation requiring a call to the emergency number 112. I understand that my request may be rejected if it does not fall within the scope of A.D.C.S. activities. I agree that volunteers are not liable for any damages, and that my data (name, phone number, location) will be made available to the community.",
+    ro: "Sunt de acord că solicit ajutor din partea comunității A.D.C.S. și nu mă aflu într-o situație critică ce impune apelarea numărului de urgență 112. Sunt de acord ca solicitarea mea poate fi respinsă dacă nu intră în aria de activitate a A.D.C.S. Sunt de acord că voluntarii sunt exonerati de răspunderea pentru eventuale daune, iar datele mele (nume, telefon, localizare) vor fi puse la dispoziție comunității.",
+  }),
+  checkboxLabel = t({
+    en: " I have read and agree to the Terms & Conditions",
+    ro: " Am citit si sunt de acord cu Termenii si Conditii",
+  }),
+  required = true,
+  name = "terms",
+} = Astro.props;
+---
+
+<style>
+  .terms-box {
+    border: 2px solid var(--color-theme); /* gray-200 */
+    border-radius: 0.75rem;
+    padding: 1rem;
+    max-height: 180px;
+    overflow-y: auto;
+    background: #f9fafb; /* gray-50 */
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .checkbox-wrap {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>
+
+<div class="terms">
+  <div class="terms-box">
+    {text}
+  </div>
+
+  <label class="checkbox-wrap">
+    <input
+      type="checkbox"
+      name={name}
+      {...required ? { required: true } : {}}
+    />
+    <span>{checkboxLabel}</span>
+  </label>
+</div>

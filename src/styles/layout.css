@@ -1,10 +1,25 @@
 /* define the layout and structure of the entire page */
 
-.l-header {
+.logo_header {
+	height: 3rem;
+	width: 3rem !important;
+	display: inline;
+	border-radius: 100%;
+	box-shadow: 3px 1px 1px var(--color-theme);
+	margin: 10px;
+	float: left;
 }
 
+.text_header {
+	padding-top: 1rem;
+	text-shadow: 1px 1px 2px var(--color-theme);
+	color: var(--color-main)
+}
+
+.l-header {}
+
 .l-main {
-	margin-block-start: var(--sp-l);
+	/* border: 2px solid black; */
 }
 
 .l-content {
@@ -16,5 +31,5 @@
 .l-footer {
 	position: sticky;
 	top: 100vh;
-	margin-block-start: calc(var(--sp-l) * 2);
+
 }

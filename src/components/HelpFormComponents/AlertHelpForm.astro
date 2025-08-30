@@ -1,0 +1,75 @@
+---
+import { useTranslations, type Lang } from "@/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const t = useTranslations(Astro.currentLocale as Lang);
+const locale = Astro.currentLocale as Lang;
+---
+
+<div class="alert_important">
+  <p>
+    <span class="red">
+      {
+        t({
+          en: "IMPORTANT! This is not an emergency request.If the situation is critical, call 911!",
+          ro: "IMPORTANT! Acest sistem nu este unul de urgență. Dacă situația este critică, apelează 112!",
+        })
+      }
+    </span>
+    <button id="more_info_button" onclick={`showMoreInfo`}> ▼</button>
+  </p>
+</div>
+
+<style>
+  .red {
+    color: var(--color-caution, #e00);
+    font-size: 1rem;
+    font-family: Ubuntu;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .alert_important {
+    background: transparent;
+    padding: 1rem;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 0.9rem;
+    text-align: center;
+    border-radius: 4px;
+  }
+
+  #more_info_button {
+    display: block;
+    width: 5rem;
+    padding: 0.3em;
+    border-radius: 0.5em;
+    background: var(--color-main);
+    color: var(--color-base);
+    text-decoration: none;
+    font-size: 10px;
+
+    margin: 0 auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("more_info_button");
+  const comp = document.getElementById("hiddenComponent");
+
+  btn.addEventListener("click", () => {
+    if (comp.classList.contains("show")) {
+      // fade + slide OUT
+      comp.classList.remove("show");
+      setTimeout(() => comp.classList.add("hidden"), 500); // wait for transition
+    } else {
+      // fade + slide IN
+      comp.classList.remove("hidden"); // show it instantly, but still opacity 0
+      void comp.offsetWidth; // 🔑 force reflow so CSS transition can start
+      comp.classList.add("show"); // now animate opacity 0 → 1 & height 0 → max
+    }
+  });
+</script>

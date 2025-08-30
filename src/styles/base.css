@@ -14,6 +14,7 @@
 		--color-main: #faf9f6;
 		--color-caution: #ffaa2b;
 	}
+
 	@media (prefers-color-scheme: light) {
 		--color-theme: #ef4d1a;
 		--color-accent: #ffcc21;
