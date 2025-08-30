@@ -3,8 +3,10 @@ layout: "@/layouts/Article.astro"
 title: Solicită asistență
 description: "Solicită asistență de la comunitate"
 ---
+
 import PageHeadline from "@/components/PageHeadline.astro";
-import AlertHelpForm from "@/components/AlertHelpForm.astro";
+import AlertHelpForm from "@/components/HelpFormComponents/AlertHelpForm.astro";
+import HelpForm from "@/components/HelpFormComponents/HelpForm.astro";
 import { SITE_TITLE } from "@/consts";
 import "@/styles/help.css";
 
@@ -12,65 +14,9 @@ import "@/styles/help.css";
 
 <section class="request-help">
 
-  <AlertHelpForm />
+{" "}
 
-  <form class="help-form">
-    <fieldset>
-      <legend>☎️ Date de contact</legend>
-    </fieldset>
+<AlertHelpForm />
+<HelpForm />
 
-    <fieldset>
-      <legend>Localizare</legend>
-      <select name="judet" required>
-        <option value="">-- Selectează județul --</option>
-        {[
-          "Alba","Arad","Argeș","Bacău","Bihor","Bistrița-Năsăud","Botoșani","Brăila",
-          "Brașov","București","Buzău","Călărași","Caraș-Severin","Cluj","Constanța",
-          "Covasna","Dâmbovița","Dolj","Galați","Giurgiu","Gorj","Harghita","Hunedoara",
-          "Ialomița","Iași","Ilfov","Maramureș","Mehedinți","Mureș","Neamț","Olt",
-          "Prahova","Sălaj","Satu Mare","Sibiu","Suceava","Teleorman","Timiș","Tulcea",
-          "Vâlcea","Vaslui","Vrancea"
-        ].map((judet) => (
-          <option value={judet}>{judet}</option>
-        ))}
-      </select>
-
-      <div id="coords">
-        <label>Latitudine: <span id="lat">—</span></label>
-        <label>Longitudine: <span id="lon">—</span></label>
-      </div>
-
-      <button
-        type="button"
-        onClick={`navigator.geolocation.getCurrentPosition((pos) => {
-          document.getElementById('lat').textContent = pos.coords.latitude.toFixed(6);
-          document.getElementById('lon').textContent = pos.coords.longitude.toFixed(6);
-        })`}
-      >
-        Folosește locația mea curentă
-      </button>
-    </fieldset>
-
-    <fieldset>
-      <legend>Informații despre vehicul și solicitare</legend>
-      <textarea name="detalii" placeholder="Descrie vehiculul și situația..." required />
-    </fieldset>
-
-    <fieldset>
-      <legend>Poze (opțional)</legend>
-      <input type="file" name="poze" accept="image/*" multiple />
-      <p class="note">Evită afișarea numerelor de înmatriculare sau a chipurilor.</p>
-    </fieldset>
-
-    <fieldset>
-      <legend>Termeni și condiții</legend>
-      <label>
-        <input type="checkbox" name="accept" required />
-        Sunt de acord că solicit ajutor din partea comunității A.D.C.S. și nu mă aflu într-o situație critică ce impune apelarea numărului de urgență 112. Sunt de acord ca solicitarea mea poate fi respinsă dacă nu intră în aria de activitate a A.D.C.S. Sunt de acord că voluntarii sunt exonerati de răspunderea pentru eventuale daune, iar datele mele (nume, telefon, localizare) vor fi puse la dispoziție comunității.
-      </label>
-    </fieldset>
-
-    <button type="submit">⛑️ Trimite</button>
-    <p class="note-submission">Solicitarea se trimite automat — nu închide pagina!</p>
-  </form>
 </section>

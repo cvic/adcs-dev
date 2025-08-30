@@ -5,8 +5,8 @@ description: "Request assistance from the community"
 ---
 
 import PageHeadline from "@/components/PageHeadline.astro";
-import AlertHelpForm from "@/components/AlertHelpForm.astro";
-import HelpForm from "@/components/HelpForm.astro";
+import AlertHelpForm from "@/components/HelpFormComponents/AlertHelpForm.astro";
+import HelpForm from "@/components/HelpFormComponents/HelpForm.astro";
 import { SITE_TITLE } from "@/consts";
 
 <PageHeadline title={frontmatter.title} />
@@ -14,6 +14,7 @@ import { SITE_TITLE } from "@/consts";
 <section class="request-help">
 
 {" "}
+
 <AlertHelpForm />
 <HelpForm />
 
