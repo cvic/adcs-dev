@@ -15,7 +15,7 @@ const locale = Astro.currentLocale as Lang;
         })
       }
     </span>
-    <button id="more_info_button" onClick={`showMoreInfo`}> ▼</button>
+    <button id="more_info_button" onclick={`showMoreInfo`}> ▼</button>
   </p>
   <p class="more_info">
     {
@@ -61,12 +61,7 @@ const locale = Astro.currentLocale as Lang;
   }
 
   .alert_important {
-    background: linear-gradient(
-      0.5turn,
-      var(--color-theme),
-      50%,
-      var(--color-base)
-    );
+    background: transparent;
     padding: 1rem;
     display: block;
     box-sizing: border-box;
