@@ -8,47 +8,20 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<header>
-  <!--<h1>{title}</h1>-->
+<div>
+  <h1>
+    {title}
+    <hr />
+  </h1>
+
   <slot />
-</header>
+</div>
 
 <style>
-  header {
-    text-align: center;
+  h1 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-top: 2rem;
     color: var(--color-theme);
-    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
-    height: 100%;
-    @media (width < 768px) {
-      margin-inline: calc(50% - 50vw);
-      border-radius: 0;
-    }
-
-    &::before,
-    &::after {
-      content: "";
-      position: absolute;
-      pointer-events: none;
-      background: var(--color-theme);
-      background-repeat: repeat;
-      z-index: -1;
-      opacity: 0.2;
-      height: 100%;
-      aspect-ratio: 1;
-      filter: blur(60px);
-    }
-    &::before {
-      inset: 0 0 auto auto;
-      clip-path: polygon(0 0, 100% 0, 100% 100%);
-    }
-    &::after {
-      inset: auto auto 0 0;
-      clip-path: polygon(0 0, 100% 100%, 0 100%);
-    }
-
-    h1 {
-      font-size: 1.6rem;
-      letter-spacing: 0.05em;
-    }
   }
 </style>
