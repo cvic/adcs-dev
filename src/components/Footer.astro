@@ -1,9 +1,8 @@
 ---
 // Footer UI displayed on each page.
-import LocalesHomeList from "@/components/i18n/LocalesHomeList.astro";
 ---
 
-<footer class="l-footer l-content">
+<footer class="footer">
   <a class="copy" href="https://adcs.ro" target="_blank" dir="ltr">
     © Asociatia De Cautare Salvare - ADCS {new Date().getFullYear()}
   </a>
@@ -12,12 +11,10 @@ import LocalesHomeList from "@/components/i18n/LocalesHomeList.astro";
 <style>
   footer {
     text-align: center;
-    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
-    color: var(--color-main);
-    border-radius: 4px;
-    margin-block-end: -10px;
-    height:50px;
-    padding:10px;
-  }
+    background-color: var(--color-theme);
+    color: var(--color-base);
 
+    padding: 0.5rem;
+    margin-top: 2rem;
+  }
 </style>

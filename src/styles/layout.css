@@ -1,35 +1,41 @@
 /* define the layout and structure of the entire page */
+body {
 
-.logo_header {
-	height: 3rem;
-	width: 3rem !important;
-	display: inline;
-	border-radius: 100%;
-	box-shadow: 3px 1px 1px var(--color-theme);
-	margin: 10px;
-	float: left;
-}
+	height: 100%;
 
-.text_header {
-	padding-top: 1rem;
-	text-shadow: 1px 1px 2px var(--color-theme);
-	color: var(--color-main)
-}
+	@media (width < 768px) {
+		margin-inline: calc(50% - 50vw);
+		border-radius: 0;
+	}
 
-.l-header {}
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		pointer-events: none;
+		background: var(--color-theme);
+		background-repeat: repeat;
+		z-index: -1;
+		opacity: 0.2;
+		height: 100%;
+		aspect-ratio: 1;
+		filter: blur(60px);
+	}
 
-.l-main {
-	/* border: 2px solid black; */
+	&::before {
+		inset: 0 0 auto auto;
+		clip-path: polygon(0 0, 100% 0, 100% 100%);
+	}
+
+	&::after {
+		inset: auto auto 0 0;
+		clip-path: polygon(0 0, 100% 100%, 0 100%);
+
+	}
 }
 
 .l-content {
-	max-inline-size: 800px;
+	max-inline-size: 768px;
 	padding-inline: var(--sp-m);
 	margin-inline: auto;
-}
-
-.l-footer {
-	position: sticky;
-	top: 100vh;
-
 }

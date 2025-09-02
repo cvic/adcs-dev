@@ -1,0 +1,77 @@
+---
+//logo image load
+import { Image } from "astro:assets";
+import adcsLogo from "@/assets/adcs-logo.jpg";
+
+//translation load
+import { useTranslations, type Lang } from "@/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import LocaleSelectSingle from "./i18n/LocaleSelectSingle.astro";
+const locale = Astro.currentLocale as Lang;
+const isActive = (path: string) =>
+  getRelativeLocaleUrl(locale, path) === Astro.url.pathname;
+const t = useTranslations(Astro.currentLocale as Lang);
+---
+
+<nav class="logo-nav shadow-md mb-4">
+  <div class="mx-auto flex items-center justify-between">
+    <!-- Logo -->
+    <a href={getRelativeLocaleUrl(locale, "/")} class="text_header">
+      <Image
+        src={locale === "ro" ? adcsLogo : adcsLogo}
+        alt={t({ en: "Adcs Logo", ro: "Logo-ul Adcs" })}
+        class="logo_header"
+        loading="eager"
+      />
+      <div class="text-header font-bold">A.D.C.S.</div>
+    </a>
+
+    <!-- Desktop Menu -->
+    <ul class="md:flex">
+      <li style="padding-right: 1rem; margin:0.2rem;">
+        <a
+          href="https://www.facebook.com/adcs.romania"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span
+            class="material-icons-sharp text-blue-700"
+            style="font-size: 2rem;">facebook</span
+          >
+        </a>
+        <li style="padding-right: 1rem;margin:0.2rem;">
+          <LocaleSelectSingle />
+        </li>
+      </li>
+    </ul>
+  </div>
+
+  <style>
+    .logo-nav {
+      background-color: transparent;
+    }
+
+    .logo_header {
+      height: 3rem;
+      width: 3rem !important;
+      display: inline;
+      border-radius: 100%;
+      box-shadow: 3px 1px 1px var(--color-theme);
+      margin: 10px;
+      float: left;
+    }
+
+    .text_header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      padding-left: var(--sp-s);
+    }
+
+    .language-meniu {
+      display: inline-block;
+    }
+  </style>
+</nav>

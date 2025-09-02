@@ -5,6 +5,8 @@ import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from './src/locales';
 
 import cloudflare from '@astrojs/cloudflare';
 
+import tailwindcss from '@tailwindcss/vite';
+
 // https://astro.build/config
 export default defineConfig({
   // Set your site's URL
@@ -30,8 +32,12 @@ export default defineConfig({
           )
         ),
       },
-    })
+    }),
   ],
 
   adapter: cloudflare(),
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
