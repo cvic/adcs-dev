@@ -1,0 +1,42 @@
+---
+import PageHeadline from "@/components/PageHeadline.astro";
+
+import { LOCALES, useTranslations, type Lang } from "@/i18n";
+export const getStaticPaths = () =>
+  Object.keys(LOCALES).map((lang) => ({
+    params: { lang },
+  }));
+
+const PAGE_ID = import.meta.env.FACEBOOK_PAGE_ID;
+const TOKEN = import.meta.env.FACEBOOK_TOKEN;
+
+let posts = [];
+try {
+  const res = await fetch(
+    `https://graph.facebook.com/v20.0/${PAGE_ID}/posts?fields=message,created_time,permalink_url&access_token=${TOKEN}`
+  );
+  const data = await res.json();
+  posts = data.data || [];
+} catch (err) {
+  console.assert("FB fetch failed", err);
+}
+---
+
+<PageHeadline title="Facebook Blog" />
+
+ Right now is blank so I can see what it returns from FB.
+{
+  posts.map((post) => (
+    <article class="mb-6 border-b pb-4">
+      <p>{post.message}</p>
+      <small class="text-gray-500">
+        {new Date(post.created_time).toLocaleString()}
+      </small>
+      <div>
+        <a href={post.permalink_url} class="text-blue-600">
+          View on Facebook
+        </a>
+      </div>
+    </article>
+  ))
+}

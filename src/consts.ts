@@ -16,3 +16,6 @@ export const NOT_TRANSLATED_CAUTION: string | Multilingual = {
 	en: "This page is not available in your language.",
 	ro: "Aceasta pagina nu este disponibila in limba dumneavoastra",
 };
+
+export const FACEBOOK_PAGE_ID = "TODO"
+export const FACEBOOK_TOKEN = "TODO"
