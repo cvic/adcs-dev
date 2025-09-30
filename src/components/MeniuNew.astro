@@ -35,15 +35,6 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
 
       <li class="meniu-desktop-link">
         <a
-          href={getRelativeLocaleUrl(locale, "/monolingual")}
-          class={isActive("/monolingual") ? "active" : null}
-        >
-          Monolingual
-        </a>
-      </li>
-
-      <li class="meniu-desktop-link">
-        <a
           href={getRelativeLocaleUrl(locale, "/blog")}
           class={isActive("/blog") ? "active" : null}
         >
@@ -120,25 +111,20 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
     </a>
 
     <a
-      href={getRelativeLocaleUrl(locale, "/monolingual")}
-      class={isActive("/monolingual") ? "active" : null}
-    >
-      Monolingual
-    </a>
-
-    <a
       href={getRelativeLocaleUrl(locale, "/blog")}
       class={isActive("/blog") ? "active" : null}
     >
       {t({ en: "Blog", ro: "Blog" })}
     </a>
 
-    <!-- <a
+    <!-- Partners link - currently commented out
+    <a
       href={getRelativeLocaleUrl(locale, "/partners")}
       class={isActive("/partners") ? "active" : null}
     >
       {t({ en: "Partners", ro: "Parteneri" })}
-    </a> -->
+    </a> 
+    -->
 
     <!-- Services dropdown for mobile -->
     <details class="group">
