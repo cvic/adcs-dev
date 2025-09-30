@@ -50,7 +50,7 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
           {t({ en: "Blog", ro: "Blog" })}
         </a>
       </li>
-
+      <!-- 
       <li class="meniu-desktop-link">
         <a
           href={getRelativeLocaleUrl(locale, "/partners")}
@@ -58,7 +58,7 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
         >
           {t({ en: "Partners", ro: "Parteneri" })}
         </a>
-      </li>
+      </li> -->
 
       <!-- Services with Dropdown -->
       <li class="relative group meniu-desktop-link-three">
@@ -133,12 +133,12 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
       {t({ en: "Blog", ro: "Blog" })}
     </a>
 
-    <a
+    <!-- <a
       href={getRelativeLocaleUrl(locale, "/partners")}
       class={isActive("/partners") ? "active" : null}
     >
       {t({ en: "Partners", ro: "Parteneri" })}
-    </a>
+    </a> -->
 
     <!-- Services dropdown for mobile -->
     <details class="group">
