@@ -5,7 +5,7 @@ const t = useTranslations(Astro.currentLocale as Lang);
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 import adcsLogo from "@/assets/adcs-logo.jpg";
-import backgroundImage from "@/assets/background_light.png";
+import backgroundImage from "@/assets/main_bg.png";
 
 import { Image } from "astro:assets";
 
@@ -18,7 +18,46 @@ export const getStaticPaths = () =>
 ---
 
 <Layout>
-  <div>
-    <Image src={backgroundImage} alt="bg.png" loading="eager" />
+  <!-- <div >
+    <Image src={backgroundImage} alt="bg.png" loading="eager" height="500" />
+  </div> -->
+
+  <div
+    class="min-screen-cover flex flex-col items-center justify-center px-3 background-cover"
+  >
+    <Image
+      src={adcsLogo}
+      alt="ADCS Logo"
+      loading="eager"
+      class="rounded-full block w-32 h-32 mx-auto"
+      style="box-shadow: 3px 3px 3px white;"
+    />
+
+    <h1 class="text-4xl text-center mt-6 font-bold text-white">
+      {t({ en: "Welcome to ADCS", ro: "Bine ați venit la ADCS" })}
+    </h1>
+
+    <p class="text-center mt-4 text-white max-w-xl">
+      {
+        t({
+          en: "Your safety is our priority. ",
+          ro: "Siguranța dvs. este prioritatea noastră. ",
+        })
+      }
+    </p>
   </div>
 </Layout>
+
+<style>
+  .background-cover {
+    background-image: url("/main_bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .min-screen-cover {
+    min-height: 70vh;
+    border-radius: 15px;
+  }
+</style>
