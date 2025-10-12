@@ -35,22 +35,13 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
 
       <li class="meniu-desktop-link">
         <a
-          href={getRelativeLocaleUrl(locale, "/monolingual")}
-          class={isActive("/monolingual") ? "active" : null}
-        >
-          Monolingual
-        </a>
-      </li>
-
-      <li class="meniu-desktop-link">
-        <a
           href={getRelativeLocaleUrl(locale, "/blog")}
           class={isActive("/blog") ? "active" : null}
         >
           {t({ en: "Blog", ro: "Blog" })}
         </a>
       </li>
-
+      <!-- 
       <li class="meniu-desktop-link">
         <a
           href={getRelativeLocaleUrl(locale, "/partners")}
@@ -58,10 +49,10 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
         >
           {t({ en: "Partners", ro: "Parteneri" })}
         </a>
-      </li>
+      </li> -->
 
       <!-- Services with Dropdown -->
-      <li class="relative group meniu-desktop-link-three">
+      <!-- <li class="relative group meniu-desktop-link-three">
         <a href="/services" class="hover:text-blue-600 flex items-center">
           {t({ en: "Incidents", ro: "Incidente" })}
           <svg
@@ -72,24 +63,25 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
             <path d="M5.25 7.5l4.5 4.5 4.5-4.5H5.25z"></path>
           </svg>
         </a>
-        <!-- Dropdown menu -->
-        <ul
-          class="absolute right-0 mt-2 w-40 bg-color-theme shadow-lg group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-200 z-10 bg-grey-300"
-        >
-          <li>
-            <a
-              href="/services/web"
-              class="block text-center px-4 py-2 hover:bg-gray-700">2025</a
-            >
-          </li>
-          <li>
-            <a
-              href="/services/mobile"
-              class="block text-center px-4 py-2 hover:bg-gray-700">2024</a
-            >
-          </li>
-        </ul>
-      </li>
+     
+        
+      <ul
+        class="absolute right-0 mt-2 w-40 bg-color-theme shadow-lg group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-200 z-10 bg-grey-300"
+      >
+        <li>
+          <a
+            href="/services/web"
+            class="block text-center px-4 py-2 hover:bg-gray-700">2025</a
+          >
+        </li>
+        <li>
+          <a
+            href="/services/mobile"
+            class="block text-center px-4 py-2 hover:bg-gray-700">2024</a
+          >
+        </li>
+      </ul>
+    </ul> -->
     </ul>
 
     <!-- Mobile Hamburger -->
@@ -103,7 +95,7 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
   <!-- Mobile Dropdown -->
   <div
     id="menu"
-    class="hidden md:hidden flex flex-col justify-center pl-3 meniu-mobile-link border-b"
+    class="hidden md:hidden flex flex-col justify-center pl-3 meniu-mobile-link"
   >
     <a
       href={getRelativeLocaleUrl(locale, "/about")}
@@ -120,28 +112,23 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
     </a>
 
     <a
-      href={getRelativeLocaleUrl(locale, "/monolingual")}
-      class={isActive("/monolingual") ? "active" : null}
-    >
-      Monolingual
-    </a>
-
-    <a
       href={getRelativeLocaleUrl(locale, "/blog")}
       class={isActive("/blog") ? "active" : null}
     >
       {t({ en: "Blog", ro: "Blog" })}
     </a>
 
+    <!-- Partners link - currently commented out
     <a
       href={getRelativeLocaleUrl(locale, "/partners")}
       class={isActive("/partners") ? "active" : null}
     >
       {t({ en: "Partners", ro: "Parteneri" })}
-    </a>
+    </a> 
+    -->
 
     <!-- Services dropdown for mobile -->
-    <details class="group">
+    <!-- <details class="group">
       <summary class="cursor-pointer">
         {t({ en: "Incidents", ro: "Incidente" })}</summary
       >
@@ -149,80 +136,80 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
         <a href="/services/web" class="py-1">2025</a>
         <a href="/services/mobile" class="py-1">2024</a>
       </div>
-    </details>
+    </details> -->
   </div>
+
+  <!-- Only runs on client -->
+  <script is:inline>
+    const btn = document.getElementById("menu-btn");
+    const menu = document.getElementById("menu");
+
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+  </script>
+
+  <style>
+    .custom-nav {
+      background-color: var(--color-theme);
+      padding: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .bg-color-theme {
+      background-color: var(--color-theme);
+    }
+
+    .logo_header {
+      height: 3rem;
+      width: auto;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .text_header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      padding-left: var(--sp-s);
+    }
+
+    .text_header:hover {
+      font-size: 2rem;
+    }
+
+    .language-meniu {
+      display: inline-block;
+    }
+
+    .meniu-desktop-link,
+    .meniu-desktop-link-three {
+      text-decoration: none;
+      color: var(--color-base);
+      font-size: 0.9rem;
+      display: inline-block;
+      margin-right: 2rem;
+    }
+
+    .active {
+      font-weight: bold;
+      color: var(--color-main);
+    }
+
+    .meniu-desktop-link:hover {
+      letter-spacing: 2px;
+    }
+
+    .meniu-mobile-link {
+      padding-left: 2rem;
+      color: var(--color-base);
+    }
+
+    .meniu-mobile-link .active {
+      font-weight: bold;
+      color: var(--color-main);
+    }
+  </style>
 </nav>
-
-<!-- Only runs on client -->
-<script is:inline>
-  const btn = document.getElementById("menu-btn");
-  const menu = document.getElementById("menu");
-
-  btn.addEventListener("click", () => {
-    menu.classList.toggle("hidden");
-  });
-</script>
-
-<style>
-  .custom-nav {
-    background-color: var(--color-theme);
-    padding: 0.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .bg-color-theme {
-    background-color: var(--color-theme);
-  }
-
-  .logo_header {
-    height: 3rem;
-    width: auto;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-
-  .text_header {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding-left: var(--sp-s);
-  }
-
-  .text_header:hover {
-    font-size: 2rem;
-  }
-
-  .language-meniu {
-    display: inline-block;
-  }
-
-  .meniu-desktop-link,
-  .meniu-desktop-link-three {
-    text-decoration: none;
-    color: var(--color-base);
-    font-size: 0.9rem;
-    display: inline-block;
-    margin-right: 2rem;
-  }
-
-  .active {
-    font-weight: bold;
-    color: var(--color-main);
-  }
-
-  .meniu-desktop-link:hover {
-    letter-spacing: 2px;
-  }
-
-  .meniu-mobile-link {
-    padding-left: 2rem;
-    color: var(--color-base);
-  }
-
-  .meniu-mobile-link .active {
-    font-weight: bold;
-    color: var(--color-main);
-  }
-</style>

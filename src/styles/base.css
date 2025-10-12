@@ -16,7 +16,7 @@
 	}
 
 	@media (prefers-color-scheme: light) {
-		--color-theme: #FF5F00;
+		--color-theme: red;
 		--color-accent: #ffcc21;
 		--color-base: #faf9f6;
 		--color-main: #342c28;
