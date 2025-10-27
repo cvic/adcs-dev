@@ -1,0 +1,12 @@
+---
+layout: "@/layouts/Article.astro"
+title: "Index Page"
+description: "Index Page"
+---
+import PageHeadline from "@/components/PageHeadline.astro";
+import RomanianMapComponent from "@/components/RomanianMapComponent.astro";
+import { SITE_TITLE } from "@/consts";
+
+<PageHeadline title={frontmatter.title} />
+
+<RomanianMapComponent />
