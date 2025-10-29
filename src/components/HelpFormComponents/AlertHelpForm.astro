@@ -16,13 +16,13 @@ const locale = Astro.currentLocale as Lang;
         })
       }
     </span>
-    <button id="more_info_button" onclick={`showMoreInfo`}> ▼</button>
+    <button id="more_info_button" class="btn btn-primary"> ▼</button>
   </p>
 </div>
 
 <style>
   .red {
-    color: var(--color-caution, #e00);
+    color: yellow;
     font-size: 1rem;
     font-family: Ubuntu;
     text-align: center;
@@ -42,17 +42,43 @@ const locale = Astro.currentLocale as Lang;
 
   #more_info_button {
     display: block;
-    width: 5rem;
-    padding: 0.3em;
-    border-radius: 0.5em;
-    background: var(--color-main);
-    color: var(--color-base);
-    text-decoration: none;
-    font-size: 10px;
+  }
 
-    margin: 0 auto;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 0.5rem; /* rounded-2xl vibes */
+    background-color: blue;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    margin-top: 2rem;
+  }
+
+  .btn-primary:hover {
+    background-color: #1d4ed8; /* blue-700 */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  .btn-primary:focus {
+    outline: 2px solid #3b82f6; /* blue-500 ring */
+    outline-offset: 2px;
+  }
+
+  .btn-primary:disabled,
+  .btn-primary[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 </style>
 
