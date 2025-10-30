@@ -57,14 +57,33 @@ const locale = Astro.currentLocale as Lang;
       <Details />
     </div>
 
-    <div class="row">
-      <TermsAndConditions />
-    </div>
+    <!--<div class="row">-->
+    <!--  <TermsAndConditions />-->
+    <!--</div>-->
 
     <button type="button" class="btn btn-primary mt-4 w-full">
       {t({ en: "Submit Request", ro: "Trimite Cererea" })}
     </button>
   </form>
+
+  <script client:visible>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("form-help");
+      console.log("Form found:", form); // ✅ You said this shows up
+
+
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log("🎯 Submit event fired!"); // <-- should appear when you click
+        const formData = new FormData(form);
+        console.log(formData);
+        // console.log("County:", formData.get("county"));
+        // console.log("Details:", formData.get("details"));
+      });
+    });
+  </script>
+
   <style>
     #form-help {
       padding: 1rem;
@@ -140,16 +159,5 @@ const locale = Astro.currentLocale as Lang;
     }
   </style>
 
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("form-help");
-      console.log("Form element:", form); // ✅ Should log <form ...>
 
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        console.log("Location:", formData.get("county"));
-      });
-    });
-  </script>
 </div>
