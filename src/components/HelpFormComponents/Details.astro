@@ -18,7 +18,10 @@ const locale = Astro.currentLocale as Lang;
   <span class="material-icons-sharp">dashboard</span>
   <textarea
     name="details"
-    placeholder="Describe the vehicle and the situation..."
+    placeholder={t({
+      en: "Please provide as many details as possible about the help needed",
+      ro: "Te rugăm să oferi cât mai multe detalii despre situatie",
+    })}
     required></textarea>
 </label>
 
@@ -51,8 +54,6 @@ const locale = Astro.currentLocale as Lang;
     appearance: none;
     border-radius: 6px;
     font-family: "Noto Sans";
-    color: var(--color-main);
-    background-color: var(--color-base);
     border: 2px solid var(--color-theme);
   }
 </style>
