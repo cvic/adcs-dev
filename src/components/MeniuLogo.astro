@@ -42,43 +42,43 @@ const t = useTranslations(Astro.currentLocale as Lang);
 
           <span
             class="material-icons-sharp text-blue-700 border-rounded"
-            style="font-size: 2rem; border: 2px solid white; text-align:center;border-radius:100%;background:white;"
+            style="font-size: 2rem; border: 2px solid #fff; text-align:center;border-radius:100%;background:#fff;"
             >facebook</span
           >
         </a>
         <li style="padding-right: 1rem;margin:0.2rem;">
           <LocaleSelectSingle />
         </li>
-
+      </li>
     </ul>
+
+    <style>
+      .logo-nav {
+        background-color: transparent;
+      }
+
+      .logo_header {
+        height: 4rem;
+        width: 4rem !important;
+        display: inline;
+        border-radius: 100%;
+        border: 2px solid white;
+        margin: 10px;
+        float: left;
+      }
+
+      .text_header {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding-left: var(--sp-s);
+      }
+
+      .language-meniu {
+        display: inline-block;
+      }
+    </style>
   </div>
-
-  <style>
-    .logo-nav {
-      background-color: transparent;
-    }
-
-    .logo_header {
-      height: 4rem;
-      width: 4rem !important;
-      display: inline;
-      border-radius: 100%;
-      border: 2px solid white;
-      margin: 10px;
-      float: left;
-    }
-
-    .text_header {
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      padding-left: var(--sp-s);
-    }
-
-    .language-meniu {
-      display: inline-block;
-    }
-  </style>
 </nav>
