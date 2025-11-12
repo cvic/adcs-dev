@@ -8,11 +8,11 @@
 
 :root {
 	@media (prefers-color-scheme: dark) {
-		--color-theme: #e9e9e9;
-		--color-accent: #943e0d;
+		--color-theme: #b93737;
+		--color-accent: #ffcc21;
 		--color-base: #342c28;
-		--color-main: #faf9f6;
-		--color-caution: #ffaa2b;
+		--color-main: #ffffff;
+		--color-caution: #a80a00;
 	}
 
 	@media (prefers-color-scheme: light) {
