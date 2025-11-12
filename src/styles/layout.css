@@ -2,36 +2,8 @@
 body {
 
 	height: 100%;
-
-	@media (width < 768px) {
-		margin-inline: calc(50% - 50vw);
-		border-radius: 0;
-	}
-
-	&::before,
-	&::after {
-		content: "";
-		position: absolute;
-		pointer-events: none;
-		background: var(--color-theme);
-		background-repeat: repeat;
-		z-index: -1;
-		opacity: 0.2;
-		height: 100%;
-		aspect-ratio: 1;
-		filter: blur(60px);
-	}
-
-	&::before {
-		inset: 0 0 auto auto;
-		clip-path: polygon(0 0, 100% 0, 100% 100%);
-	}
-
-	&::after {
-		inset: auto auto 0 0;
-		clip-path: polygon(0 0, 100% 100%, 0 100%);
-
-	}
+	overflow-x: hidden;
+	background-image: linear-gradient(45deg, #f706067e 30%, #ffffff13 30%, #ffffff13 60%, #f706067e 60%);
 }
 
 .l-content {

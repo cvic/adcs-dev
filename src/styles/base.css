@@ -8,7 +8,7 @@
 
 :root {
 	@media (prefers-color-scheme: dark) {
-		--color-theme: #b93737;
+		--color-theme: #f706067e;
 		--color-accent: #ffcc21;
 		--color-base: #342c28;
 		--color-main: #ffffff;
@@ -16,7 +16,7 @@
 	}
 
 	@media (prefers-color-scheme: light) {
-		--color-theme: #b93737;
+		--color-theme: #f706067e;
 		--color-accent: #ffcc21;
 		--color-base: #342c28;
 		--color-main: #ffffff;
