@@ -61,25 +61,42 @@ const locale = Astro.currentLocale as Lang;
     <!--  <TermsAndConditions />-->
     <!--</div>-->
 
-    <button type="button" class="btn btn-primary mt-4 w-full">
+    <button
+      type="button"
+      class="btn btn-primary mt-4 w-full"
+      id="submit-help-form"
+    >
       {t({ en: "Submit Request", ro: "Trimite Cererea" })}
     </button>
   </form>
 
-  <script client:visible>
+  <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("form-help");
-      console.log("Form found:", form); // ✅ You said this shows up
+      const submitButton = document.getElementById("submit-help-form");
 
-
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        console.log("🎯 Submit event fired!"); // <-- should appear when you click
+      submitButton?.addEventListener("click", () => {
+        const form = document.getElementById("form-help");
+        // console.log("Form found:", form); // ✅ You said this shows up
         const formData = new FormData(form);
         console.log(formData);
-        // console.log("County:", formData.get("county"));
-        // console.log("Details:", formData.get("details"));
+        const location = document.getElementById("coords-text").innerHTML;
+        console.log(location);
+
+        const finalData =
+          "Location: " +
+          formData.get("county") +
+          "\n" +
+          "Details: " +
+          formData.get("details") +
+          "\n" +
+          location;
+        console.log(finalData);
+
+        const phone = "40723222327";
+        const message = finalData;
+
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        window.location.href = url;
       });
     });
   </script>
@@ -158,6 +175,4 @@ const locale = Astro.currentLocale as Lang;
       display: none;
     }
   </style>
-
-
 </div>
