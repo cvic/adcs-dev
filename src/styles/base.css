@@ -3,12 +3,13 @@
 :lang(ar) {
 	* {
 		letter-spacing: 0 !important;
+		font-family: 'Inter', sans-serif;
 	}
 }
 
 :root {
 	@media (prefers-color-scheme: dark) {
-		--color-theme: #f706067e;
+		--color-theme: #f4501eb2;
 		--color-accent: #ffcc21;
 		--color-base: #342c28;
 		--color-main: #ffffff;
@@ -16,7 +17,7 @@
 	}
 
 	@media (prefers-color-scheme: light) {
-		--color-theme: #f706067e;
+		--color-theme: #f4501eb2;
 		--color-accent: #ffcc21;
 		--color-base: #342c28;
 		--color-main: #ffffff;
@@ -53,13 +54,7 @@
 	background-size: 16px 16px;
 
 	line-height: 1.6;
-	font-weight: 500;
-	font-size: 18px;
-	font-family: "Noto Sans",
-	system-ui,
-	"SF Pro Text",
-	-apple-system,
-	BlinkMacSystemFont,
+	font-family: "Roboto",
 	sans-serif;
 
 	@media (width < 480px) {
