@@ -27,28 +27,22 @@ const t = useTranslations(Astro.currentLocale as Lang);
     </a>
 
     <!-- Desktop Menu -->
-    <ul class="md:flex">
-      <li style="padding-right: 1rem; margin:0.5rem;">
+    <ul class="logo-nav-actions">
+      <li>
         <a
           href="https://www.facebook.com/profile.php?id=61557876935991"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <!-- <span
-            class="material-icons-sharp text-white border-rounded"
-            style="font-size: 2rem; border: 2px solid white; text-align:ceneter;border-radius:100%;"
-            >camera_alt</span
-          > -->
-
           <span
-            class="material-icons-sharp text-blue-700 border-rounded"
-            style="font-size: 2rem; border: 2px solid #fff; text-align:center;border-radius:100%;background:#fff;"
+            class="material-icons-sharp text-white border-rounded"
+            style="font-size: 2rem;"
             >facebook</span
           >
         </a>
-        <li style="padding-right: 1rem;margin:0.2rem;">
-          <LocaleSelectSingle />
-        </li>
+      </li>
+      <li>
+        <LocaleSelectSingle />
       </li>
     </ul>
 
@@ -74,6 +68,15 @@ const t = useTranslations(Astro.currentLocale as Lang);
         display: flex;
         align-items: center;
         padding-left: var(--sp-s);
+      }
+
+      .logo-nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        list-style: none;
+        margin: 0;
+        padding: 0 1rem 0 0;
       }
 
       .language-meniu {

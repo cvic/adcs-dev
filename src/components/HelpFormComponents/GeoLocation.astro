@@ -2,36 +2,150 @@
 const { onCoordinates } = Astro.props || {}; // optional callback
 
 import { useTranslations, type Lang } from "@/i18n";
-import { getRelativeLocaleUrl } from "astro:i18n";
 const t = useTranslations(Astro.currentLocale as Lang);
-const locale = Astro.currentLocale as Lang;
+
+const strings = {
+  denied:       t({ en: "Location access was denied.",              ro: "Accesul la locație a fost refuzat." }),
+  unavailable:  t({ en: "Could not retrieve location.",             ro: "Locația nu a putut fi determinată." }),
+  notProvided:  t({ en: "Location: not provided",                   ro: "Locație: nedisponibilă" }),
+  unsupported:  t({ en: "Geolocation is not supported by your browser.", ro: "Browserul tău nu suportă geolocalizarea." }),
+  coordsLabel:  t({ en: "Latitude",                                 ro: "Latitudine" }),
+  coordsLabel2: t({ en: "Longitude",                                ro: "Longitudine" }),
+};
 ---
 
 <div id="geo-output" class="p-4 border rounded">
   <p id="coords-text" style="text-align: center;">
-    {t({ en: "Getting your location...", ro: "Preluam coordonatele..." })}
+    <span id="geo-loading" class="geo-loading">
+      <span class="material-icons-sharp spin">sync</span>
+      {t({ en: "Getting your location...", ro: "Preluam coordonatele..." })}
+    </span>
   </p>
+  <div id="geo-warning" class="geo-warning hidden">
+    <span class="material-icons-sharp">warning</span>
+    <span id="geo-warning-text"></span>
+    <button type="button" id="geo-retry" class="geo-retry-btn">
+      <span class="material-icons-sharp">refresh</span>
+      {t({ en: "Try again", ro: "Încearcă din nou" })}
+    </button>
+  </div>
 </div>
 
-<script type="module">
-  const output = document.getElementById("coords-text");
+<script define:vars={{ strings }}>
+  const coordsText = document.getElementById("coords-text");
+  const geoLoading = document.getElementById("geo-loading");
+  const geoWarning = document.getElementById("geo-warning");
+  const geoWarningText = document.getElementById("geo-warning-text");
+  const retryBtn = document.getElementById("geo-retry");
 
-  if ("geolocation" in navigator) {
+  function showLoading() {
+    geoLoading.classList.remove("hidden");
+    geoWarning.classList.add("hidden");
+  }
+
+  function showSuccess(latitude, longitude) {
+    geoLoading.classList.add("hidden");
+    geoWarning.classList.add("hidden");
+    coordsText.textContent = `${strings.coordsLabel}: ${latitude}, ${strings.coordsLabel2}: ${longitude}`;
+  }
+
+  function showError(denied) {
+    geoLoading.classList.add("hidden");
+    geoWarning.classList.remove("hidden");
+    geoWarningText.textContent = denied ? strings.denied : strings.unavailable;
+    coordsText.textContent = strings.notProvided;
+  }
+
+  function requestPosition() {
+    showLoading();
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        output.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
-
-        // Optional: send coordinates to Astro props callback
+        showSuccess(latitude, longitude);
         if (typeof window.onCoordinates === "function") {
           window.onCoordinates({ latitude, longitude });
         }
       },
       (err) => {
-        output.textContent = `Error getting location: ${err.message}`;
+        showError(err.code === 1);
       }
     );
+  }
+
+  if ("geolocation" in navigator) {
+    requestPosition();
+    retryBtn.addEventListener("click", requestPosition);
   } else {
-    output.textContent = "Geolocation is not supported by your browser.";
+    geoLoading.classList.add("hidden");
+    coordsText.textContent = strings.notProvided;
+    geoWarning.classList.remove("hidden");
+    geoWarningText.textContent = strings.unsupported;
+    retryBtn.classList.add("hidden");
   }
 </script>
+
+<style>
+  .hidden {
+    display: none;
+  }
+
+  .geo-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .spin {
+    animation: spin 1s linear infinite;
+    font-size: 18px;
+    color: var(--color-theme);
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .geo-warning {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #664d03;
+  }
+
+  .geo-warning .material-icons-sharp {
+    font-size: 20px;
+    color: #856404;
+    flex-shrink: 0;
+  }
+
+  .geo-retry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: auto;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid #856404;
+    border-radius: 4px;
+    background: transparent;
+    color: #664d03;
+    cursor: pointer;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .geo-retry-btn .material-icons-sharp {
+    font-size: 16px;
+    color: #856404;
+  }
+
+  .geo-retry-btn:hover {
+    background-color: #ffc107;
+  }
+</style>

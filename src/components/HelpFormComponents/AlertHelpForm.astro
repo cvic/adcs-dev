@@ -93,16 +93,18 @@ const locale = Astro.currentLocale as Lang;
   const btn = document.getElementById("more_info_button");
   const comp = document.getElementById("hiddenComponent");
 
-  btn.addEventListener("click", () => {
-    if (comp.classList.contains("show")) {
-      // fade + slide OUT
-      comp.classList.remove("show");
-      setTimeout(() => comp.classList.add("hidden"), 500); // wait for transition
-    } else {
-      // fade + slide IN
-      comp.classList.remove("hidden"); // show it instantly, but still opacity 0
-      void comp.offsetWidth; // 🔑 force reflow so CSS transition can start
-      comp.classList.add("show"); // now animate opacity 0 → 1 & height 0 → max
-    }
-  });
+  if (btn && comp) {
+    btn.addEventListener("click", () => {
+      if (comp.classList.contains("show")) {
+        // fade + slide OUT
+        comp.classList.remove("show");
+        setTimeout(() => comp.classList.add("hidden"), 500); // wait for transition
+      } else {
+        // fade + slide IN
+        comp.classList.remove("hidden"); // show it instantly, but still opacity 0
+        void comp.offsetWidth; // 🔑 force reflow so CSS transition can start
+        comp.classList.add("show"); // now animate opacity 0 → 1 & height 0 → max
+      }
+    });
+  }
 </script>

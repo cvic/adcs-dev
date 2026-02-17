@@ -16,3 +16,5 @@ export const NOT_TRANSLATED_CAUTION: string | Multilingual = {
 	en: "This page is not available in your language.",
 	ro: "Aceasta pagina nu este disponibila in limba dumneavoastra",
 };
+
+export const WHATSAPP_PHONE = "40723222327";

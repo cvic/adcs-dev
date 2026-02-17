@@ -7,9 +7,14 @@ import AndDivider from "./AndDivider.astro";
 import GeoLocation from "./GeoLocation.astro";
 import Details from "./Details.astro";
 import TermsAndConditions from "./TermsAndConditions.astro";
+import { WHATSAPP_PHONE } from "@/consts";
 
 const t = useTranslations(Astro.currentLocale as Lang);
 const locale = Astro.currentLocale as Lang;
+const submitLabel = t({ en: "Submit Request", ro: "Trimite Cererea" });
+const loadingLabel = t({ en: "Sending...", ro: "Se trimite..." });
+const locationLabel = t({ en: "Location", ro: "Locație" });
+const detailsLabel = t({ en: "Details", ro: "Detalii" });
 ---
 
 <div class="more_info_container accordion hidden" id="hiddenComponent">
@@ -65,38 +70,49 @@ const locale = Astro.currentLocale as Lang;
       type="button"
       class="btn btn-primary mt-4 w-full"
       id="submit-help-form"
+      data-label={submitLabel}
+      data-loading-label={loadingLabel}
     >
-      {t({ en: "Submit Request", ro: "Trimite Cererea" })}
+      {submitLabel}
     </button>
   </form>
 
-  <script is:inline>
+  <script define:vars={{ WHATSAPP_PHONE, locationLabel, detailsLabel }}>
     document.addEventListener("DOMContentLoaded", () => {
       const submitButton = document.getElementById("submit-help-form");
 
       submitButton?.addEventListener("click", () => {
         const form = document.getElementById("form-help");
-        // console.log("Form found:", form); // ✅ You said this shows up
+
+        if (!form.reportValidity()) {
+          return;
+        }
+
+        const originalLabel = submitButton.dataset.label;
+        const loadingLabel = submitButton.dataset.loadingLabel;
+        submitButton.disabled = true;
+        submitButton.textContent = loadingLabel;
+
         const formData = new FormData(form);
-        console.log(formData);
-        const location = document.getElementById("coords-text").innerHTML;
-        console.log(location);
+        const location = document.getElementById("coords-text").textContent.trim();
 
         const finalData =
-          "Location: " +
+          locationLabel + ": " +
           formData.get("county") +
           "\n" +
-          "Details: " +
+          detailsLabel + ": " +
           formData.get("details") +
           "\n" +
           location;
-        console.log(finalData);
 
-        const phone = "40723222327";
-        const message = finalData;
-
-        const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        const url = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(finalData)}`;
         window.location.href = url;
+
+        // Restore button in case navigation is blocked (e.g. popup blocker)
+        setTimeout(() => {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }, 3000);
       });
     });
   </script>

@@ -19,10 +19,11 @@ const images = {
   ro: roImage,
 };
 
-const anotherLang =
+const anotherLang = (
   Astro.currentLocale === Object.keys(LOCALES)[0]
     ? Object.keys(LOCALES)[1]
-    : Object.keys(LOCALES)[0];
+    : Object.keys(LOCALES)[0]
+) as keyof typeof images;
 
 console.log(anotherLang);
 ---

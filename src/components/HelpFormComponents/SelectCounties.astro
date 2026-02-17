@@ -19,7 +19,7 @@ const { selected = "" } = Astro.props;
   <select id="county" name="county" class="border rounded px-2 py-1 w-full">
     {
       locations.map(({ value, label }) => (
-        <option label={label} value={value} />
+        <option value={value} selected={value === selected}>{label}</option>
       ))
     }
   </select>
