@@ -1,9 +1,21 @@
 /* define the layout and structure of the entire page */
 body {
-
-	height: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 	overflow-x: hidden;
-	background-image: linear-gradient(45deg, #d33a3a86 30%, #3809091e 30%, #3809091e 60%, #d33a3a86 60%);
+	background-image:
+		linear-gradient(
+			color-mix(in srgb, var(--color-base) 10%, transparent),
+			color-mix(in srgb, var(--color-base) 90%, transparent)
+		),
+		url('/main_bg.png');
+	background-size: auto, 220px 220px;
+	background-repeat: repeat;
+}
+
+.l-main {
+	flex: 1;
 }
 
 .l-content {

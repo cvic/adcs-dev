@@ -1,64 +1,131 @@
 ---
-// Link UI to switch another locale.
-// If you support only 2 locales, this style is useful.
-
 import { LOCALES } from "@/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
-
 import { Image } from "astro:assets";
 import enImage from "@/assets/flags/en.png";
 import roImage from "@/assets/flags/ro.png";
 
-console.assert(
-  Object.keys(LOCALES).length === 2,
-  "The number of locale settings is not 2. This UI only supports switching between 2 languages."
-);
-
-const images = {
+const images: Record<string, ImageMetadata> = {
   en: enImage,
   ro: roImage,
 };
 
-const anotherLang =
-  Astro.currentLocale === Object.keys(LOCALES)[0]
-    ? Object.keys(LOCALES)[1]
-    : Object.keys(LOCALES)[0];
-
-console.log(anotherLang);
+const currentLocale = Astro.currentLocale!;
+const pathWithoutLocale = Astro.url.pathname.replace(/^\/[a-zA-Z-]+/, "");
 ---
 
-<a
-  class="locale-select-single"
-  href={getRelativeLocaleUrl(
-    anotherLang,
-    Astro.url.pathname.replace(/^\/[a-zA-Z-]+/, "")
-  )}
->
-  <Image
-    src={images[anotherLang]}
-    alt="flag"
-    width="15"
-    class="inline align-middle"
-    style="padding-top:9px"
-  />
-  <span class="lang-label">{LOCALES[anotherLang].label}</span>
-</a>
+<details class="lang-picker">
+  <summary class="lang-trigger">
+    <Image src={images[currentLocale]} alt={currentLocale} width="16" class="flag" />
+    <span>{LOCALES[currentLocale].label}</span>
+    <span class="material-icons-sharp chevron">expand_more</span>
+  </summary>
+
+  <ul class="lang-dropdown">
+    {Object.entries(LOCALES).map(([lang, info]) => (
+      <li>
+        <a
+          href={getRelativeLocaleUrl(lang, pathWithoutLocale)}
+          class={`lang-option${lang === currentLocale ? " active" : ""}`}
+        >
+          <Image src={images[lang]} alt={lang} width="16" class="flag" />
+          {info.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</details>
+
+<script>
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    document.querySelectorAll<HTMLDetailsElement>("details.lang-picker").forEach((el) => {
+      if (!el.contains(e.target as Node)) el.removeAttribute("open");
+    });
+  });
+</script>
 
 <style>
-  .locale-select-single {
-    padding: 0.5em;
-    background-color: color-mix(in srgb, white 10%, transparent);
-    border-radius: 6px;
-    font-family: "Noto Sans";
-    font-size: 0.7rem;
-    text-align: center;
-    opacity: 0.7;
-    color: white;
+  .lang-picker {
+    position: relative;
   }
 
-  .lang-label {
-    text-align: center !important;
-    width: 100%;
-    margin: 0 auto;
+  .lang-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.6rem;
+    background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: var(--color-main);
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease-out, color 0.3s ease;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-main) 18%, transparent);
+    }
+  }
+
+  .flag {
+    width: 16px;
+    height: auto;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+
+  .chevron {
+    font-size: 1rem !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    transition: rotate 0.2s ease-out;
+  }
+
+  details[open] .chevron {
+    rotate: 180deg;
+  }
+
+  .lang-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.4rem);
+    min-width: 130px;
+    list-style: none;
+    margin: 0;
+    padding: 0.25rem;
+    background-color: var(--color-base);
+    border: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    z-index: 100;
+  }
+
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: var(--color-main);
+    text-decoration: none;
+    transition: background-color 0.15s ease-out;
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
+    }
+
+    &.active {
+      color: var(--color-accent);
+      font-weight: 600;
+    }
   }
 </style>
