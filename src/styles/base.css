@@ -129,9 +129,9 @@ path {
 /* ── Light theme — derived from dark ──
    base/main swap roles; theme loses alpha; accent darkens along same hue */
 :root[data-theme="light"] {
-	--color-base: rgba(246, 242, 242, 0.64);  /* dark base (#342c28) mirrored to high lightness */
-	--color-main: rgba(0, 0, 0, 0.94);  /* dark base becomes text — exact inverse of dark's main */
-	--color-theme: #f4501e;  /* same hue as dark theme, full opacity */
-	--color-accent: rgba(228, 228, 0, 0.94);  /* same yellow hue, 3× darker for light bg contrast */
+	--color-base: #f5f1f0;  /* solid light, no transparency — prevents background image bleed */
+	--color-main: #000000;  /* solid dark text — full contrast, mirrors dark theme's base hue */
+	--color-theme: #d43e0f;  /* same hue, slightly darker for better contrast on light bg */
+	--color-accent: #000000;  /* dark amber — same yellow hue shifted dark for light bg legibility */
 	--color-caution: #c01200;  /* same red, slightly more vivid */
 }
