@@ -1,13 +1,10 @@
 ---
 import { LOCALES, useTranslations, type Lang } from "@/i18n";
-import Layout from "@/layouts/Article.astro";
+import Layout from "@/layouts/Base.astro";
 const t = useTranslations(Astro.currentLocale as Lang);
 import { getRelativeLocaleUrl } from "astro:i18n";
-
-import adcsLogo from "@/assets/adcs-logo.jpg";
-import backgroundImage from "@/assets/main_bg.png";
-
 import { Image } from "astro:assets";
+import adcsLogo from "@/assets/adcs-logo.jpg";
 
 const locale = Astro.currentLocale as Lang;
 
@@ -18,37 +15,187 @@ export const getStaticPaths = () =>
 ---
 
 <Layout>
-  <!-- <div >
-    <Image src={backgroundImage} alt="bg.png" loading="eager" height="500" />
-  </div> -->
-
-  <div
-    class="min-screen-cover flex flex-col items-center justify-center px-3 background-cover"
-  >
+  <!-- Hero -->
+  <section class="hero">
     <Image
       src={adcsLogo}
       alt="ADCS Logo"
       loading="eager"
-      class="rounded-full block w-32 h-32 mx-auto"
-      style="box-shadow: 3px 3px 3px white;"
+      class="hero-logo"
     />
 
-    <h1 class="text-4xl text-center mt-6 font-bold text-white">
+    <h1 class="hero-title">
       {t({ en: "Welcome to ADCS", ro: "Bine ați venit la ADCS" })}
     </h1>
-  </div>
+
+    <p class="hero-subtitle">
+      {t({
+        en: "Asociația de Căutare Salvare — a free, volunteer-powered search and rescue service across Romania.",
+        ro: "Asociația de Căutare Salvare — un serviciu gratuit de căutare și salvare, susținut de voluntari în toată România.",
+      })}
+    </p>
+
+    <div class="hero-actions">
+      <a href={getRelativeLocaleUrl(locale, "/help")} class="btn-primary-hero">
+        <span class="material-icons-sharp">sos</span>
+        {t({ en: "Request Assistance", ro: "Solicită Asistență" })}
+      </a>
+      <a href={getRelativeLocaleUrl(locale, "/about")} class="btn-outline-hero">
+        {t({ en: "About Us", ro: "Despre Noi" })}
+        <span class="material-icons-sharp">arrow_forward</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Highlights -->
+  <section class="highlights">
+    <div class="highlight-card">
+      <span class="material-icons-sharp">search</span>
+      <h3>{t({ en: "Search & Rescue", ro: "Căutare & Salvare" })}</h3>
+      <p>{t({ en: "Rapid response teams deployed across Romania.", ro: "Echipe de intervenție rapidă în toată România." })}</p>
+    </div>
+
+    <div class="highlight-card">
+      <span class="material-icons-sharp">volunteer_activism</span>
+      <h3>{t({ en: "Volunteer-Powered", ro: "Voluntari Dedicați" })}</h3>
+      <p>{t({ en: "Entirely run by trained and certified volunteers.", ro: "Susținut integral de voluntari instruiți și certificați." })}</p>
+    </div>
+
+    <!--<div class="highlight-card">-->
+    <!--  <span class="material-icons-sharp">favorite</span>-->
+    <!--  <h3>{t({ en: "Free Service", ro: "Serviciu Gratuit" })}</h3>-->
+    <!--  <p>{t({ en: "Always free for anyone who needs help.", ro: "Întotdeauna gratuit pentru cei care au nevoie." })}</p>-->
+    <!--</div>-->
+  </section>
 </Layout>
 
 <style>
-  .background-cover {
-    /* background-image: url("/main_bg.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; */
+  /* Hero */
+  .hero {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+    padding: var(--sp-l) var(--sp-s);
+    gap: var(--sp-s);
   }
 
-  .min-screen-cover {
-    min-height: 70vh;
-    border-radius: 15px;
+  .hero-logo {
+    width: 9rem;
+    height: 9rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-theme);
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, var(--color-theme) 15%, transparent),
+      0 8px 32px color-mix(in srgb, var(--color-theme) 30%, transparent);
+  }
+
+  .hero-title {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--color-main);
+    margin: var(--sp-s) 0 0;
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    opacity: 0.7;
+    max-width: 480px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--sp-s);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--sp-s);
+  }
+
+  .btn-primary-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 8px;
+    background-color: var(--color-theme);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 2px solid var(--color-theme);
+    transition: 0.2s ease-out;
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-theme) 75%, black);
+      border-color: color-mix(in srgb, var(--color-theme) 75%, black);
+    }
+  }
+
+  .btn-outline-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 8px;
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 2px solid color-mix(in srgb, var(--color-main) 30%, transparent);
+    transition: 0.2s ease-out;
+
+    &:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+  }
+
+  /* Highlights */
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--sp-s);
+    margin-bottom: var(--sp-l);
+  }
+
+  .highlight-card {
+    border-radius: 8px;
+    background-color: color-mix(in srgb, var(--color-main) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+    border-top: 3px solid var(--color-theme);
+    padding: var(--sp-s) var(--sp-m);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .highlight-card .material-icons-sharp {
+    font-size: 2.2rem;
+    color: var(--color-theme);
+    width: auto;
+    height: auto;
+  }
+
+  .highlight-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .highlight-card p {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin: 0;
+    line-height: 1.55;
   }
 </style>

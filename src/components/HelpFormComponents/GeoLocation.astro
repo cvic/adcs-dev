@@ -14,7 +14,7 @@ const strings = {
 };
 ---
 
-<div id="geo-output" class="p-4 border rounded">
+<div id="geo-output">
   <p id="coords-text" style="text-align: center;">
     <span id="geo-loading" class="geo-loading">
       <span class="material-icons-sharp spin">sync</span>
@@ -106,22 +106,31 @@ const strings = {
     to { transform: rotate(360deg); }
   }
 
+  #geo-output {
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+    padding: 0.75rem 1rem;
+    background-color: color-mix(in srgb, var(--color-main) 4%, transparent);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
   .geo-warning {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-top: 0.5rem;
     padding: 0.5rem;
-    background-color: #fff3cd;
-    border: 1px solid #ffc107;
+    background-color: color-mix(in srgb, var(--color-caution) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-caution) 35%, transparent);
     border-radius: 6px;
     font-size: 0.85rem;
-    color: #664d03;
+    color: var(--color-main);
   }
 
   .geo-warning .material-icons-sharp {
     font-size: 20px;
-    color: #856404;
+    color: var(--color-caution);
     flex-shrink: 0;
   }
 
@@ -131,21 +140,24 @@ const strings = {
     gap: 0.25rem;
     margin-left: auto;
     padding: 0.25rem 0.6rem;
-    border: 1px solid #856404;
+    border: 1px solid color-mix(in srgb, var(--color-main) 30%, transparent);
     border-radius: 4px;
     background: transparent;
-    color: #664d03;
+    color: var(--color-main);
     cursor: pointer;
     font-size: 0.8rem;
     white-space: nowrap;
+    opacity: 0.8;
+    transition: 0.2s ease-out;
+
+    &:hover {
+      opacity: 1;
+      border-color: var(--color-theme);
+      background-color: color-mix(in srgb, var(--color-main) 8%, transparent);
+    }
   }
 
   .geo-retry-btn .material-icons-sharp {
     font-size: 16px;
-    color: #856404;
-  }
-
-  .geo-retry-btn:hover {
-    background-color: #ffc107;
   }
 </style>

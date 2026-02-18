@@ -7,6 +7,7 @@ import adcsLogo from "@/assets/adcs-logo.jpg";
 import { useTranslations, type Lang } from "@/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import LocaleSelectSingle from "./i18n/LocaleSelectSingle.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 const locale = Astro.currentLocale as Lang;
 const isActive = (path: string) =>
   getRelativeLocaleUrl(locale, path) === Astro.url.pathname;
@@ -18,12 +19,12 @@ const t = useTranslations(Astro.currentLocale as Lang);
     <!-- Logo -->
     <a href={getRelativeLocaleUrl(locale, "/")} class="text_header">
       <Image
-        src={locale === "ro" ? adcsLogo : adcsLogo}
+        src={adcsLogo}
         alt={t({ en: "Adcs Logo", ro: "Logo-ul Adcs" })}
         class="logo_header"
         loading="eager"
       />
-      <div class="text-header font-bold" style="color:white;">A.D.C.S.</div>
+      <div class="text-header font-bold logo-title">A.D.C.S.</div>
     </a>
 
     <!-- Desktop Menu -->
@@ -34,12 +35,11 @@ const t = useTranslations(Astro.currentLocale as Lang);
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span
-            class="material-icons-sharp text-white border-rounded"
-            style="font-size: 2rem;"
-            >facebook</span
-          >
+          <span class="material-icons-sharp fb-icon">facebook</span>
         </a>
+      </li>
+      <li>
+        <ThemeToggle />
       </li>
       <li>
         <LocaleSelectSingle />
@@ -59,6 +59,7 @@ const t = useTranslations(Astro.currentLocale as Lang);
         border: 2px solid white;
         margin: 10px;
         float: left;
+        transition: border-color 0.3s ease;
       }
 
       .text_header {
@@ -68,6 +69,25 @@ const t = useTranslations(Astro.currentLocale as Lang);
         display: flex;
         align-items: center;
         padding-left: var(--sp-s);
+      }
+
+      .logo-title {
+        color: white;
+        transition: color 0.3s ease;
+      }
+
+      .fb-icon {
+        font-size: 2rem !important;
+        width: auto !important;
+        height: auto !important;
+        overflow: visible !important;
+        color: var(--color-main);
+        transition: color 0.3s ease;
+        opacity: 0.8;
+
+        &:hover {
+          opacity: 1;
+        }
       }
 
       .logo-nav-actions {

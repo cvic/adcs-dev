@@ -8,23 +8,16 @@
 }
 
 :root {
-	@media (prefers-color-scheme: dark) {
-		--color-theme: #f4501eb2;
-		--color-accent: #ffcc21;
-		--color-base: #342c28;
-		--color-main: #ffffff;
-		--color-caution: #a80a00;
-	}
+	/* Dark theme — default */
+	--color-theme: #f4501eb2;
+	--color-accent: #ffcc21;
+	--color-base: #342c28;
+	--color-main: #ffffff;
+	--color-caution: #a80a00;
 
-	@media (prefers-color-scheme: light) {
-		--color-theme: #f4501eb2;
-		--color-accent: #ffcc21;
-		--color-base: #342c28;
-		--color-main: #ffffff;
-		--color-caution: #a80a00;
-	}
+	transition: background-color 0.3s ease, color 0.3s ease;
 
-	--sp-l: 64px;
+	--sp-l: 30px;
 	--sp-m: 32px;
 	--sp-s: 16px;
 
@@ -34,24 +27,9 @@
 		--sp-s: 8px;
 	}
 
-	--english-font: "Noto Sans",
-	"Robot",
-	"Avenir Next",
-	"Avenir",
-	"Century Gothic",
-	"SF Pro Text",
-	"Arial",
-	-apple-system,
-	BlinkMacSystemFont,
-	sans-serif;
-
 	color: var(--color-main);
 	background-color: var(--color-base);
 	accent-color: var(--color-theme);
-
-	background-image: radial-gradient(color-mix(in srgb, var(--color-main) 10%, transparent) 1px,
-		var(--color-base) 1px);
-	background-size: 16px 16px;
 
 	line-height: 1.6;
 	font-family: "Roboto",
@@ -109,4 +87,51 @@ path {
 	&:dir(rtl).dir {
 		scale: -1 1;
 	}
+}
+
+.btn-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5rem 1.25rem;
+	border: none;
+	border-radius: 0.5rem;
+	background-color: blue;
+	color: #fff;
+	font-weight: 500;
+	font-size: 1rem;
+	line-height: 1.5;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+	margin-top: 2rem;
+
+	&:hover {
+		background-color: #1d4ed8;
+		transform: translateY(-1px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+	}
+
+	&:focus {
+		outline: 2px solid #3b82f6;
+		outline-offset: 2px;
+	}
+
+	&:disabled,
+	&[disabled] {
+		opacity: 0.6;
+		cursor: not-allowed;
+		transform: none;
+		box-shadow: none;
+	}
+}
+
+/* ── Light theme — derived from dark ──
+   base/main swap roles; theme loses alpha; accent darkens along same hue */
+:root[data-theme="light"] {
+	--color-base: rgba(246, 242, 242, 0.64);  /* dark base (#342c28) mirrored to high lightness */
+	--color-main: rgba(0, 0, 0, 0.94);  /* dark base becomes text — exact inverse of dark's main */
+	--color-theme: #f4501e;  /* same hue as dark theme, full opacity */
+	--color-accent: rgba(228, 228, 0, 0.94);  /* same yellow hue, 3× darker for light bg contrast */
+	--color-caution: #c01200;  /* same red, slightly more vivid */
 }

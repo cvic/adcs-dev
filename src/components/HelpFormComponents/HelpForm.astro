@@ -6,7 +6,6 @@ import SelectCounties from "./SelectCounties.astro";
 import AndDivider from "./AndDivider.astro";
 import GeoLocation from "./GeoLocation.astro";
 import Details from "./Details.astro";
-import TermsAndConditions from "./TermsAndConditions.astro";
 import { WHATSAPP_PHONE } from "@/consts";
 
 const t = useTranslations(Astro.currentLocale as Lang);
@@ -18,40 +17,34 @@ const detailsLabel = t({ en: "Details", ro: "Detalii" });
 ---
 
 <div class="more_info_container accordion hidden" id="hiddenComponent">
-  <p class="more_info">
-    {
-      t({
-        en: "This page is for those who need help from the community — the response is **not guaranteed**",
-        ro: "Această pagină este adresată celor care au nevoie de ajutor din partea comunității — timpul de răspuns **nu este garantat**.",
-      })
-    }
-  </p>
-  <p class="more_info">
-    {
-      t({
-        en: " Your browser will display a message asking for access to your GPS location. Allow access for the most accurate location.",
-        ro: " Browser-ul va afișa un mesaj pentru a solicita acces la locația ta GPS. Confirmă accesul pentru o localizare cât mai precisă.",
-      })
-    }
-  </p>
-  <p class="more_info">
-    {
-      t({
-        en: " Fields marked with a * are **mandatory**.",
-        ro: " Câmpurile marcate cu * sunt obligatorii",
-      })
-    }
-  </p>
-  <p class="more_info">
-    {
-      t({
-        en: "  After submitting the form, members in your area will be automatically notified by whatsapp!",
-        ro: "  După trimiterea formularului, membrii din zona ta vor fi automat notificați whatsapp!",
-      })
-    }
-  </p>
+  <div class="form-instructions">
+    <p class="more_info">
+      {t({
+        en: "This page is for those who need help from the community — the response is not guaranteed.",
+        ro: "Această pagină este adresată celor care au nevoie de ajutor din partea comunității — timpul de răspuns nu este garantat.",
+      })}
+    </p>
+    <p class="more_info">
+      {t({
+        en: "Your browser will ask for GPS access. Allow it for the most accurate location.",
+        ro: "Browser-ul va solicita acces la GPS. Confirmă accesul pentru o localizare precisă.",
+      })}
+    </p>
+    <p class="more_info">
+      {t({
+        en: "Fields marked with * are mandatory.",
+        ro: "Câmpurile marcate cu * sunt obligatorii.",
+      })}
+    </p>
+    <p class="more_info">
+      {t({
+        en: "After submitting, volunteers in your area will be notified via WhatsApp.",
+        ro: "După trimitere, membrii din zona ta vor fi notificați automat pe WhatsApp.",
+      })}
+    </p>
+  </div>
 
-  <form id="form-help" class="more_info">
+  <form id="form-help">
     <div class="row">
       <SelectCounties selected="B" />
       <AndDivider />
@@ -118,22 +111,48 @@ const detailsLabel = t({ en: "Details", ro: "Detalii" });
   </script>
 
   <style>
+    .more_info_container {
+      border-radius: 8px;
+      background-color: color-mix(in srgb, var(--color-main) 8%, transparent);
+      border: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+      border-top: 3px solid var(--color-theme);
+      margin-block-start: var(--sp-s);
+    }
+
+    p.more_info {
+      font-size: 0.82rem;
+      opacity: 0.7;
+      line-height: 1.55;
+      margin: 0;
+      padding: 0.2rem 0 0.2rem 1em;
+      position: relative;
+
+      &::before {
+        content: "›";
+        position: absolute;
+        left: 0;
+        color: var(--color-theme);
+        font-weight: 700;
+      }
+    }
+
+    .form-instructions {
+      padding: var(--sp-s) var(--sp-m);
+      border-bottom: 1px solid color-mix(in srgb, var(--color-main) 10%, transparent);
+      background-color: color-mix(in srgb, var(--color-main) 3%, transparent);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
     #form-help {
-      padding: 1rem;
-      margin-bottom: 100px;
+      padding: var(--sp-s) var(--sp-m) var(--sp-m);
     }
 
     .row {
-      margin-top: 2rem;
+      margin-top: var(--sp-m);
       border-left: 2px solid var(--color-theme);
-      padding-left: 0.5rem;
-    }
-
-    .more_info {
-      display: block; /* keep layout consistent */
-      margin: 0;
-      text-align: justify;
-      font-size: 0.7rem;
+      padding-left: var(--sp-s);
     }
 
     .accordion {
@@ -146,45 +165,8 @@ const detailsLabel = t({ en: "Details", ro: "Detalii" });
     }
 
     .accordion.show {
-      max-height: 100rem; /* pick a value bigger than your content */
+      max-height: 100rem;
       opacity: 1;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem 1.25rem;
-      border: none;
-      border-radius: 0.5rem; /* rounded-2xl vibes */
-      background-color: blue;
-      color: #fff;
-      font-weight: 500;
-      font-size: 1rem;
-      line-height: 1.5;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-      margin-top: 2rem;
-    }
-
-    .btn-primary:hover {
-      background-color: #1d4ed8; /* blue-700 */
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
-    }
-
-    .btn-primary:focus {
-      outline: 2px solid #3b82f6; /* blue-500 ring */
-      outline-offset: 2px;
-    }
-
-    .btn-primary:disabled,
-    .btn-primary[disabled] {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
     }
 
     .hidden {

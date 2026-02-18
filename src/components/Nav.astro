@@ -1,0 +1,155 @@
+---
+//translation load
+import { useTranslations, type Lang } from "@/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+const locale = Astro.currentLocale as Lang;
+const isActive = (path: string) =>
+  getRelativeLocaleUrl(locale, path) === Astro.url.pathname;
+const t = useTranslations(Astro.currentLocale as Lang);
+
+//select language component
+import LocaleSelect from "./i18n/LocaleSelect.astro";
+---
+
+<nav class="custom-nav shadow-md px-4 py-3">
+  <div class="max-w-6xl mx-auto flex items-center justify-end">
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex">
+      <li class="meniu-desktop-link">
+        <a
+          href={getRelativeLocaleUrl(locale, "/about")}
+          class={isActive("/about") ? "active" : null}
+        >
+          {t({ en: "About Us", ro: "Despre noi" })}
+        </a>
+      </li>
+
+      <li class="meniu-desktop-link">
+        <a
+          href={getRelativeLocaleUrl(locale, "/help")}
+          class={isActive("/help") ? "active" : null}
+        >
+          {t({ en: "Request Assistance", ro: "Solicită asistență" })}
+        </a>
+      </li>
+
+      <li class="meniu-desktop-link">
+        <a
+          href={getRelativeLocaleUrl(locale, "/blog")}
+          class={isActive("/blog") ? "active" : null}
+        >
+          {t({ en: "Blog", ro: "Blog" })}
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile Hamburger -->
+    <button id="menu-btn" class="md:hidden" style="margin-right: 0.5rem;">
+      <span class="material-icons-sharp text-white" style="font-size: 2rem;"
+        >menu</span
+      >
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div id="menu" class="hidden md:hidden flex flex-col">
+    <a
+      href={getRelativeLocaleUrl(locale, "/about")}
+      class={`meniu-mobile-link${isActive("/about") ? " active" : ""}`}
+    >
+      {t({ en: "About Us", ro: "Despre noi" })}
+    </a>
+
+    <a
+      href={getRelativeLocaleUrl(locale, "/help")}
+      class={`meniu-mobile-link${isActive("/help") ? " active" : ""}`}
+    >
+      {t({ en: "Request Assistance", ro: "Solicită asistență" })}
+    </a>
+
+    <a
+      href={getRelativeLocaleUrl(locale, "/blog")}
+      class={`meniu-mobile-link${isActive("/blog") ? " active" : ""}`}
+    >
+      {t({ en: "Blog", ro: "Blog" })}
+    </a>
+  </div>
+
+  <!-- Only runs on client -->
+  <script is:inline>
+    const btn = document.getElementById("menu-btn");
+    const menu = document.getElementById("menu");
+
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+  </script>
+
+  <style>
+    .custom-nav {
+      background-color: var(--color-theme);
+      padding: 0.5rem 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+    }
+
+    /* ── Desktop links ── */
+    .meniu-desktop-link {
+      list-style: none;
+    }
+
+    .meniu-desktop-link a {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      transition: color 0.2s ease-out, background-color 0.2s ease-out;
+
+      &:hover {
+        color: var(--color-accent);
+        background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
+      }
+
+      &.active {
+        color: var(--color-accent);
+        font-weight: 700;
+        background-color: color-mix(in srgb, var(--color-main) 12%, transparent);
+      }
+    }
+
+    /* ── Mobile dropdown ── */
+    #menu {
+      border-top: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+      margin-top: 0.5rem;
+      padding: 0.25rem 0 0.5rem 0;
+    }
+
+    .meniu-mobile-link {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+      padding: 0.6rem 1.5rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-main) 8%, transparent);
+      transition: color 0.2s ease-out, padding-left 0.2s ease-out;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        color: var(--color-accent);
+        padding-left: 2rem;
+      }
+
+      &.active {
+        color: var(--color-accent);
+        font-weight: 700;
+        border-left: 3px solid var(--color-accent);
+      }
+    }
+  </style>
+</nav>

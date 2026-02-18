@@ -4,13 +4,48 @@ title: Despre noi
 description: Despre ONG-ul nostru
 ---
 import PageHeadline from "@/components/PageHeadline.astro";
-import { SITE_TITLE } from "@/consts";
+import "@/styles/about.css";
 
 <PageHeadline title={frontmatter.title} />
 
+<div class="about-frame">
+  <p class="lead">ADCS (Asociația de Căutare Salvare) este un serviciu public gratuit de salvare, recuperare și intervenții în situații speciale și de urgență — susținut în întregime de voluntari.</p>
 
-ADCS este un serviciu public gratuit de salvare, recuperare și intervenții în situații speciale și de urgență
+  <section class="about-section">
+    <h2>Ce Facem</h2>
+    <ul>
+      <li>
+        <span class="material-icons-sharp">search</span>
+        Operațiuni de căutare și salvare pe teritoriul României
+      </li>
+      <li>
+        <span class="material-icons-sharp">favorite</span>
+        Prim ajutor și asistență medicală la evenimente comunitare
+      </li>
+      <li>
+        <span class="material-icons-sharp">people</span>
+        Asistență comunitară și coordonare de voluntari
+      </li>
+      <li>
+        <span class="material-icons-sharp">directions_car</span>
+        Intervenții în teren accidentat și zone îndepărtate
+      </li>
+    </ul>
+  </section>
 
-În același timp, ADCS este o platformă de sine stătătoare ce dorește să îi pună în legatură pe cei ce au avea nevoie de asistență.
-Membrii ADCS sunt înscriși voluntar în sistem, așadar platforma nu asigură un timp de raspuns din partea acestora sau intervenția acestora.
-Platforma nu este un înlocuitor al instituțiilor dedicate situațiilor de urgență sau 112. Încurajăm apelerea 112 în cazul în care incidentul este urgent, sunt victime sau exista riscuri iminente.
+  <section class="about-section">
+    <h2>Cum Funcționează</h2>
+    <ol>
+      <li><span class="step-num">1</span> Voluntarii din zona sunt notificați automat </li>
+      <li><span class="step-num">2</span> O echipă răspunde în funcție de disponibilitate și proximitate</li>
+    </ol>
+    <p class="note">
+      Membrii sunt voluntari — <strong>timpul de răspuns nu este garantat</strong>. Platforma nu este un înlocuitor al serviciilor dedicate situațiilor de urgență.
+    </p>
+  </section>
+
+  <div class="about-warning">
+    <span class="material-icons-sharp">emergency</span>
+    <p>În situații cu risc pentru viață, sună întotdeauna mai întâi la <strong>112</strong>.</p>
+  </div>
+</div>
