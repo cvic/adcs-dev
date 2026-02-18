@@ -6,12 +6,29 @@ body {
 	overflow-x: hidden;
 	background-image:
 		linear-gradient(
-			color-mix(in srgb, var(--color-base) 10%, transparent),
-			color-mix(in srgb, var(--color-base) 90%, transparent)
+			color-mix(in srgb, var(--color-base) 65%, transparent),
+			color-mix(in srgb, var(--color-base) 100%, transparent)
 		),
-		url('/main_bg.png');
-	background-size: auto, 220px 220px;
-	background-repeat: repeat;
+		url('/main_bg_3.jpg');
+    background-size: cover;
+
+}
+
+/* In light mode, use a much stronger overlay so the background image
+   doesn't wash out text and content */
+[data-theme="light"] body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+	background-image:
+        linear-gradient(
+            color-mix(in srgb, var(--color-base) 65%, transparent),
+            color-mix(in srgb, var(--color-base) 100%, transparent)
+        ),
+		url('/main_bg_5.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .l-main {

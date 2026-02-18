@@ -15,7 +15,7 @@ const t = useTranslations(Astro.currentLocale as Lang);
 ---
 
 <nav class="logo-nav shadow-md mb-4">
-  <div class="mx-auto flex items-center justify-between">
+  <div class="mx-auto flex flex-wrap items-center justify-between">
     <!-- Logo -->
     <a href={getRelativeLocaleUrl(locale, "/")} class="text_header">
       <Image
@@ -24,7 +24,7 @@ const t = useTranslations(Astro.currentLocale as Lang);
         class="logo_header"
         loading="eager"
       />
-      <div class="text-header font-bold logo-title">A.D.C.S.</div>
+      <div class="text-header font-bold logo-title">ADCS.</div>
     </a>
 
     <!-- Desktop Menu -->
@@ -56,10 +56,13 @@ const t = useTranslations(Astro.currentLocale as Lang);
         width: 4rem !important;
         display: inline;
         border-radius: 100%;
-        border: 2px solid white;
+        border: 2px solid var(--color-theme);
+        box-shadow:
+          0 0 0 4px color-mix(in srgb, var(--color-theme) 20%, transparent),
+          0 4px 16px color-mix(in srgb, var(--color-theme) 25%, transparent);
         margin: 10px;
         float: left;
-        transition: border-color 0.3s ease;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
       }
 
       .text_header {
@@ -69,11 +72,16 @@ const t = useTranslations(Astro.currentLocale as Lang);
         display: flex;
         align-items: center;
         padding-left: var(--sp-s);
+
+        @media (width < 480px) {
+          width: 100%;
+        }
       }
 
       .logo-title {
-        color: white;
-        transition: color 0.3s ease;
+        color: var(--color-theme);
+        font-size: 2.5rem;
+        font-weight: bold;
       }
 
       .fb-icon {
@@ -97,6 +105,12 @@ const t = useTranslations(Astro.currentLocale as Lang);
         list-style: none;
         margin: 0;
         padding: 0 1rem 0 0;
+
+        @media (width < 480px) {
+          width: 100%;
+          justify-content: center;
+          padding: 0 0 0.5rem 0;
+        }
       }
 
       .language-meniu {
