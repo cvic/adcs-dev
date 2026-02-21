@@ -1,0 +1,78 @@
+---
+import { useTranslations, type Lang } from "@/i18n";
+
+const t = useTranslations(Astro.currentLocale as Lang);
+---
+
+<div class="search-wrap">
+  <input
+    id="blog-search"
+    type="search"
+    placeholder={t({ en: "Search articles…", ro: "Caută articole…" })}
+    aria-label={t({ en: "Search articles", ro: "Caută articole" })}
+  />
+</div>
+
+<p id="no-results" class="no-results hidden">
+  {t({ en: "No articles found.", ro: "Niciun articol găsit." })}
+</p>
+
+<script>
+  const input = document.getElementById("blog-search") as HTMLInputElement;
+  const items = document.querySelectorAll<HTMLLIElement>("#blog-list li");
+  const noResults = document.getElementById("no-results")!;
+
+  input.addEventListener("input", () => {
+    const q = input.value.toLowerCase().trim();
+    let visible = 0;
+    items.forEach((li) => {
+      const match =
+        !q ||
+        li.dataset.title!.includes(q) ||
+        li.dataset.desc!.includes(q) ||
+        li.dataset.date!.includes(q);
+      li.hidden = !match;
+      if (match) visible++;
+    });
+    noResults.classList.toggle("hidden", visible > 0);
+  });
+</script>
+
+<style>
+  .search-wrap {
+    margin-block-end: var(--sp-m);
+    margin-block-start: var(--sp-m);
+  }
+
+  #blog-search {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--color-main) 25%, transparent);
+    background-color: color-mix(in srgb, var(--color-main) 8%, transparent);
+    color: inherit;
+    outline: none;
+    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+
+    &:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 20%, transparent);
+    }
+
+    &::placeholder {
+      opacity: 0.45;
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    opacity: 0.5;
+    font-style: italic;
+    margin-block-start: var(--sp-m);
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>

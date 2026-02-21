@@ -8,8 +8,10 @@ export async function getStaticPaths() {
   const posts = await getCollection("blog");
 
   return posts.map((post) => {
-    const [lang, ...id] = post.id.split("/");
-    return { params: { lang, id: id.join("/") || undefined }, props: post };
+    const parts = post.id.split("/");
+    const lang = parts[parts.length - 1];
+    const id = parts.slice(0, -1).join("/");
+    return { params: { lang, id: id || undefined }, props: post };
   });
 }
 
@@ -29,7 +31,7 @@ const formattedDate = post.data.date.toLocaleDateString(lang, {
 
 <Layout {title}>
   <a href={`/${lang}/blog/`} class="back-link">
-    ← {t({ en: "Back to Blog", ro: "Înapoi la Blog" })}
+    ← {t({ en: "Back to Blog", ro: "Înapoi la Articole" })}
   </a>
 
   <div class="frame">

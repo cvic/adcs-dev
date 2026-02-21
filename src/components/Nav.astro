@@ -2,13 +2,45 @@
 //translation load
 import { useTranslations, type Lang } from "@/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { getCollection } from "astro:content";
+
 const locale = Astro.currentLocale as Lang;
+const t = useTranslations(Astro.currentLocale as Lang);
+
 const isActive = (path: string) =>
   getRelativeLocaleUrl(locale, path) === Astro.url.pathname;
-const t = useTranslations(Astro.currentLocale as Lang);
+
+const isActiveOrUnder = (path: string) => {
+  const url = getRelativeLocaleUrl(locale, path);
+  const base = url.endsWith("/") ? url : url + "/";
+  return Astro.url.pathname === url || Astro.url.pathname.startsWith(base);
+};
+
+const articleIsActive = (slug: string) =>
+  Astro.url.pathname === `/${locale}/blog/${slug}/`;
 
 //select language component
 import LocaleSelect from "./i18n/LocaleSelect.astro";
+
+// Blog submenu posts for the current locale, split into groups
+const allPosts = await getCollection("blog");
+const localePosts = allPosts
+  .filter((post) => post.id.split("/").at(-1) === locale)
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+
+const bajaPosts = localePosts.filter((post) =>
+  post.id.split("/").slice(0, -1).join("/").includes("baja")
+);
+const otherPosts = localePosts.filter(
+  (post) => !post.id.split("/").slice(0, -1).join("/").includes("baja")
+);
+
+const bajaGroupActive = bajaPosts.some((post) =>
+  articleIsActive(post.id.split("/").slice(0, -1).join("/"))
+);
+const othersGroupActive = otherPosts.some((post) =>
+  articleIsActive(post.id.split("/").slice(0, -1).join("/"))
+);
 ---
 
 <nav class="custom-nav shadow-md px-4 py-3">
@@ -33,13 +65,51 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
         </a>
       </li>
 
-      <li class="meniu-desktop-link">
+      <li class="meniu-desktop-link has-dropdown">
         <a
           href={getRelativeLocaleUrl(locale, "/blog")}
-          class={isActive("/blog") ? "active" : null}
+          class={isActiveOrUnder("/blog") ? "active" : null}
         >
-          {t({ en: "Blog", ro: "Blog" })}
+          {t({ en: "Blog", ro: "Toate Articolele" })}
+          <span class="dropdown-arrow">▾</span>
         </a>
+        <ul class="dropdown">
+          <li class="dropdown-section-label">Baja 555</li>
+          {bajaPosts.map((post) => {
+            const slug = post.id.split("/").slice(0, -1).join("/");
+            return (
+              <li>
+                <a
+                  href={`/${locale}/blog/${slug}/`}
+                  class={articleIsActive(slug) ? "active" : null}
+                >
+                  {post.data.title}
+                </a>
+              </li>
+            );
+          })}
+          {otherPosts.length > 0 && (
+            <>
+              <li class="dropdown-divider" />
+              <li class="dropdown-section-label">
+                {t({ en: "Others", ro: "Altele" })}
+              </li>
+              {otherPosts.map((post) => {
+                const slug = post.id.split("/").slice(0, -1).join("/");
+                return (
+                  <li>
+                    <a
+                      href={`/${locale}/blog/${slug}/`}
+                      class={articleIsActive(slug) ? "active" : null}
+                    >
+                      {post.data.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </>
+          )}
+        </ul>
       </li>
     </ul>
 
@@ -69,10 +139,50 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
 
     <a
       href={getRelativeLocaleUrl(locale, "/blog")}
-      class={`meniu-mobile-link${isActive("/blog") ? " active" : ""}`}
+      class={`meniu-mobile-link${isActiveOrUnder("/blog") ? " active" : ""}`}
     >
-      {t({ en: "Blog", ro: "Blog" })}
+      {t({ en: "Blog", ro: "Toate Articolele" })}
     </a>
+
+    <!-- Baja 555 submenu (mobile) -->
+    <button id="baja-toggle" class={`meniu-mobile-link meniu-mobile-toggle${bajaGroupActive ? " active" : ""}`}>
+      Baja 555 <span class="toggle-arrow">{bajaGroupActive ? "▴" : "▾"}</span>
+    </button>
+    <div id="baja-submenu" class:list={["mobile-submenu", { hidden: !bajaGroupActive }]}>
+      {bajaPosts.map((post) => {
+        const slug = post.id.split("/").slice(0, -1).join("/");
+        return (
+          <a
+            href={`/${locale}/blog/${slug}/`}
+            class={`meniu-mobile-sublink${articleIsActive(slug) ? " active" : ""}`}
+          >
+            {post.data.title}
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- Others submenu (mobile) -->
+    {otherPosts.length > 0 && (
+      <>
+        <button id="others-toggle" class={`meniu-mobile-link meniu-mobile-toggle${othersGroupActive ? " active" : ""}`}>
+          {t({ en: "Others", ro: "Altele" })} <span class="toggle-arrow">{othersGroupActive ? "▴" : "▾"}</span>
+        </button>
+        <div id="others-submenu" class:list={["mobile-submenu", { hidden: !othersGroupActive }]}>
+          {otherPosts.map((post) => {
+            const slug = post.id.split("/").slice(0, -1).join("/");
+            return (
+              <a
+                href={`/${locale}/blog/${slug}/`}
+                class={`meniu-mobile-sublink${articleIsActive(slug) ? " active" : ""}`}
+              >
+                {post.data.title}
+              </a>
+            );
+          })}
+        </div>
+      </>
+    )}
   </div>
 
   <!-- Only runs on client -->
@@ -83,6 +193,26 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
     btn.addEventListener("click", () => {
       menu.classList.toggle("hidden");
     });
+
+    const bajaToggle = document.getElementById("baja-toggle");
+    const bajaSubmenu = document.getElementById("baja-submenu");
+
+    bajaToggle.addEventListener("click", () => {
+      bajaSubmenu.classList.toggle("hidden");
+      bajaToggle.querySelector(".toggle-arrow").textContent =
+        bajaSubmenu.classList.contains("hidden") ? "▾" : "▴";
+    });
+
+    const othersToggle = document.getElementById("others-toggle");
+    const othersSubmenu = document.getElementById("others-submenu");
+
+    if (othersToggle && othersSubmenu) {
+      othersToggle.addEventListener("click", () => {
+        othersSubmenu.classList.toggle("hidden");
+        othersToggle.querySelector(".toggle-arrow").textContent =
+          othersSubmenu.classList.contains("hidden") ? "▾" : "▴";
+      });
+    }
   </script>
 
   <style>
@@ -120,6 +250,76 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
       }
     }
 
+    /* ── Desktop dropdown ── */
+    .has-dropdown {
+      position: relative;
+    }
+
+    .dropdown-arrow {
+      font-size: 0.7rem;
+      margin-left: 0.2rem;
+      opacity: 0.7;
+      vertical-align: middle;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      min-width: 200px;
+      background-color: var(--color-theme);
+      border: 1px solid color-mix(in srgb, var(--color-main) 20%, transparent);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      padding: 0.4rem 0;
+      list-style: none;
+      z-index: 100;
+    }
+
+    .has-dropdown:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background-color: color-mix(in srgb, var(--color-main) 20%, transparent);
+      margin: 0.3rem 0;
+    }
+
+    .dropdown-section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-accent);
+      opacity: 0.6;
+      padding: 0.4rem 0.9rem 0.2rem;
+    }
+
+    .dropdown li a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 0;
+      transition: color 0.15s ease-out, background-color 0.15s ease-out;
+
+      &:hover {
+        color: var(--color-accent);
+        background-color: color-mix(in srgb, var(--color-main) 12%, transparent);
+      }
+
+      &.active {
+        color: var(--color-accent);
+        font-weight: 700;
+        background-color: color-mix(in srgb, var(--color-main) 15%, transparent);
+        border-left: 3px solid var(--color-accent);
+        padding-left: calc(0.9rem - 3px);
+      }
+    }
+
     /* ── Mobile dropdown ── */
     #menu {
       border-top: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
@@ -149,6 +349,56 @@ import LocaleSelect from "./i18n/LocaleSelect.astro";
         color: var(--color-accent);
         font-weight: 700;
         border-left: 3px solid var(--color-accent);
+      }
+    }
+
+    .meniu-mobile-toggle {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-main) 8%, transparent);
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle-arrow {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .mobile-submenu {
+      background-color: color-mix(in srgb, var(--color-main) 8%, transparent);
+    }
+
+    .meniu-mobile-sublink {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 0.88rem;
+      padding: 0.5rem 2.5rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-main) 6%, transparent);
+      transition: color 0.15s ease-out;
+      opacity: 0.85;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        color: var(--color-accent);
+        opacity: 1;
+      }
+
+      &.active {
+        color: var(--color-accent);
+        font-weight: 700;
+        opacity: 1;
+        border-left: 3px solid var(--color-accent);
+        padding-left: calc(2.5rem - 3px);
       }
     }
   </style>

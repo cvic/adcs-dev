@@ -4,17 +4,21 @@ import Layout from "@/layouts/Article.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import PageHeadline from "@/components/PageHeadline.astro";
+import BlogSearch from "@/components/BlogSearch.astro";
 
 const locale = Astro.currentLocale as Lang;
 const t = useTranslations(locale);
 
 const posts = (await getCollection("blog"))
-  .filter((post) => post.id.split("/")[0] === locale)
+  .filter((post) => {
+    const parts = post.id.split("/");
+    return parts[parts.length - 1] === locale;
+  })
   .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
 
 const title = t({
   en: "Blog",
-  ro: "Blog",
+  ro: "Toate Articolele",
 });
 
 export const getStaticPaths = () =>
@@ -26,13 +30,19 @@ export const getStaticPaths = () =>
 <Layout {title}>
   <PageHeadline {title} />
 
-  <ul>
+  <BlogSearch />
+
+  <ul id="blog-list">
     {
       posts.map((post) => {
-        const [, ...id] = post.id.split("/");
+        const id = post.id.split("/").slice(0, -1).join("/");
         return (
-          <li>
-            <a href={`/${locale}/blog/${id.join("/")}/`}>
+          <li
+            data-title={post.data.title.toLowerCase()}
+            data-desc={(post.data.description ?? "").toLowerCase()}
+            data-date={post.data.date.toLocaleDateString(locale).toLowerCase()}
+          >
+            <a href={`/${locale}/blog/${id}/`}>
               {post.data.cover && (
                 <Image src={post.data.cover} alt={post.data.title} class="cover" />
               )}
@@ -49,6 +59,7 @@ export const getStaticPaths = () =>
       })
     }
   </ul>
+
 </Layout>
 
 <style>
