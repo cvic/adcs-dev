@@ -25,5 +25,5 @@
     transition: color 0.3s;
   }
   a:hover {
-    color: var(--color-theme-dark);
+    color: var(--color-theme);
   }

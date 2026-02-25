@@ -1,0 +1,104 @@
+.about-frame {
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--color-main) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+  border-top: 3px solid var(--color-theme);
+  padding: var(--sp-m);
+  margin-block-start: var(--sp-m);
+}
+
+.about-frame .lead {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  padding: var(--sp-s) var(--sp-s) var(--sp-s) var(--sp-m);
+  border-left: 3px solid var(--color-accent);
+  background-color: color-mix(in srgb, var(--color-main) 5%, transparent);
+  border-radius: 0 4px 4px 0;
+  margin-block-end: var(--sp-m);
+}
+
+.about-section {
+  margin-block: var(--sp-m);
+}
+
+.about-section h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-block: 0 0.75rem;
+  padding-block-end: 0.4rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+}
+
+.about-section ul,
+.about-section ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.about-section li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  background-color: color-mix(in srgb, var(--color-main) 5%, transparent);
+  font-size: 0.95rem;
+}
+
+.about-section ul .material-icons-sharp {
+  color: var(--color-theme);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background-color: var(--color-theme);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.about-frame .note {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-block-start: 0.75rem;
+  padding-inline-start: 0.5rem;
+  border-left: 2px solid color-mix(in srgb, var(--color-main) 20%, transparent);
+}
+
+.about-warning {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-s);
+  margin-block-start: var(--sp-m);
+  padding: var(--sp-s) var(--sp-m);
+  border-radius: 6px;
+  background-color: color-mix(in srgb, var(--color-caution) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-caution) 35%, transparent);
+}
+
+.about-warning .material-icons-sharp {
+  color: var(--color-caution);
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.about-warning p {
+  margin: 0;
+  font-size: 0.95rem;
+}

@@ -1,37 +1,38 @@
 /* define the layout and structure of the entire page */
 body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
+	background-image:
+		linear-gradient(
+			color-mix(in srgb, var(--color-base) 65%, transparent),
+			color-mix(in srgb, var(--color-base) 100%, transparent)
+		),
+		url('/main_bg_3.jpg');
+    background-size: cover;
 
-	height: 100%;
+}
 
-	@media (width < 768px) {
-		margin-inline: calc(50% - 50vw);
-		border-radius: 0;
-	}
+/* In light mode, use a much stronger overlay so the background image
+   doesn't wash out text and content */
+[data-theme="light"] body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+	background-image:
+        linear-gradient(
+            color-mix(in srgb, var(--color-base) 65%, transparent),
+            color-mix(in srgb, var(--color-base) 100%, transparent)
+        ),
+		url('/main_bg_5.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
-	&::before,
-	&::after {
-		content: "";
-		position: absolute;
-		pointer-events: none;
-		background: var(--color-theme);
-		background-repeat: repeat;
-		z-index: -1;
-		opacity: 0.2;
-		height: 100%;
-		aspect-ratio: 1;
-		filter: blur(60px);
-	}
-
-	&::before {
-		inset: 0 0 auto auto;
-		clip-path: polygon(0 0, 100% 0, 100% 100%);
-	}
-
-	&::after {
-		inset: auto auto 0 0;
-		clip-path: polygon(0 0, 100% 100%, 0 100%);
-
-	}
+.l-main {
+	flex: 1;
 }
 
 .l-content {

@@ -1,0 +1,60 @@
+---
+---
+
+<button id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+  <span class="material-icons-sharp" id="theme-icon">light_mode</span>
+</button>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById("theme-toggle");
+    var icon = document.getElementById("theme-icon");
+
+    function updateIcon(theme) {
+      // In dark mode show the sun (switch to light); in light mode show the moon (switch to dark)
+      icon.textContent = theme === "dark" ? "light_mode" : "dark_mode";
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+      updateIcon(theme);
+    }
+
+    // Sync icon with current theme on load
+    updateIcon(document.documentElement.getAttribute("data-theme") || "dark");
+
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme");
+      applyTheme(current === "dark" ? "light" : "dark");
+    });
+  })();
+</script>
+
+<style>
+  #theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
+    color: var(--color-main);
+    cursor: pointer;
+    transition: background-color 0.2s ease-out, color 0.3s ease;
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-main) 20%, transparent);
+    }
+  }
+
+  #theme-icon {
+    font-size: 1.1rem !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+</style>

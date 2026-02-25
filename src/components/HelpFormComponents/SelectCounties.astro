@@ -19,7 +19,7 @@ const { selected = "" } = Astro.props;
   <select id="county" name="county" class="border rounded px-2 py-1 w-full">
     {
       locations.map(({ value, label }) => (
-        <option label={label} value={value} />
+        <option value={value} selected={value === selected}>{label}</option>
       ))
     }
   </select>
@@ -39,7 +39,6 @@ const { selected = "" } = Astro.props;
       &:first-child {
         font-size: 24px;
         inset: 8px auto 8px 8px;
-        opacity: 0.4;
       }
       &:last-child {
         font-size: 28px;
@@ -54,9 +53,7 @@ const { selected = "" } = Astro.props;
     cursor: pointer;
     appearance: none;
     border-radius: 6px;
-    font-family: "Noto Sans";
-    color: var(--color-main);
-    background-color: var(--color-base);
+    font-family: inherit;
     border: 2px solid var(--color-theme);
   }
 </style>

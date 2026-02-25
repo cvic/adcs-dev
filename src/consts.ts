@@ -17,5 +17,7 @@ export const NOT_TRANSLATED_CAUTION: string | Multilingual = {
 	ro: "Aceasta pagina nu este disponibila in limba dumneavoastra",
 };
 
+export const WHATSAPP_PHONE = "40723222327";
+
 export const FACEBOOK_PAGE_ID = "TODO"
 export const FACEBOOK_TOKEN = "TODO"

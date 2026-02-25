@@ -1,20 +1,24 @@
 ---
 import { LOCALES, useTranslations, type Lang } from "@/i18n";
-import Layout from "@/layouts/Base.astro";
+import Layout from "@/layouts/Article.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import PageHeadline from "@/components/PageHeadline.astro";
+import BlogSearch from "@/components/BlogSearch.astro";
 
 const locale = Astro.currentLocale as Lang;
 const t = useTranslations(locale);
 
 const posts = (await getCollection("blog"))
-  .filter((post) => post.id.split("/")[0] === locale)
+  .filter((post) => {
+    const parts = post.id.split("/");
+    return parts[parts.length - 1] === locale;
+  })
   .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
 
 const title = t({
   en: "Blog",
-  ro: "Blog",
+  ro: "Toate Articolele",
 });
 
 export const getStaticPaths = () =>
@@ -26,40 +30,104 @@ export const getStaticPaths = () =>
 <Layout {title}>
   <PageHeadline {title} />
 
-  <ul>
+  <BlogSearch />
+
+  <ul id="blog-list">
     {
       posts.map((post) => {
-        const [, ...id] = post.id.split("/");
+        const id = post.id.split("/").slice(0, -1).join("/");
         return (
-          <li>
-            <a href={`/${locale}/blog/${id.join("/")}/`}>
+          <li
+            data-title={post.data.title.toLowerCase()}
+            data-desc={(post.data.description ?? "").toLowerCase()}
+            data-date={post.data.date.toLocaleDateString(locale).toLowerCase()}
+          >
+            <a href={`/${locale}/blog/${id}/`}>
               {post.data.cover && (
-                <Image src={post.data.cover} alt={post.data.title} />
+                <Image src={post.data.cover} alt={post.data.title} class="cover" />
               )}
-              <h2>{post.data.title}</h2>
+              <div class="card-body">
+                <h2>{post.data.title}</h2>
+                <p class="description">{post.data.description}</p>
+                <time datetime={post.data.date.toISOString()}>
+                  {post.data.date.toLocaleDateString(locale)}
+                </time>
+              </div>
             </a>
           </li>
         );
       })
     }
   </ul>
+
 </Layout>
 
 <style>
-  p {
-    margin-block-start: var(--sp-s);
-  }
   ul {
     margin-block-start: var(--sp-m);
     display: grid;
-    gap: var(--sp-s);
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: var(--sp-m);
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    list-style: none;
+    padding: 0;
   }
 
   li {
-    margin-block-end: 1rem;
-    img {
-      border-radius: 6px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--color-main) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-main) 15%, transparent);
+    border-top: 3px solid var(--color-theme);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      border-top-color: var(--color-accent);
     }
+
+    a {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .cover {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+  }
+
+  .card-body {
+    padding: var(--sp-s);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--color-accent);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .description {
+    font-size: 0.85rem;
+    opacity: 0.75;
+    margin: 0;
+    flex: 1;
+  }
+
+  time {
+    font-size: 0.75rem;
+    opacity: 0.5;
   }
 </style>
