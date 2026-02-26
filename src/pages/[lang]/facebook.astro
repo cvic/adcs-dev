@@ -1,0 +1,22 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LOCALES, useTranslations, type Lang } from "@/i18n";
+import FacebookPagePlugin from '@/components/FacebookPagePlugin.astro';
+import { FACEBOOK_URL } from "@/consts";
+
+export const getStaticPaths = () =>
+  Object.keys(LOCALES).map((lang) => ({
+    params: { lang },
+  }));
+
+const locale = Astro.currentLocale as Lang;
+const t = useTranslations(locale);
+
+
+---
+<Base title={t({ en: "Facebook", ro: "Facebook" })}>
+    <FacebookPagePlugin
+        href={FACEBOOK_URL}
+        tabs="timeline,events"
+    />
+</Base>

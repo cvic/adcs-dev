@@ -18,3 +18,5 @@ export const NOT_TRANSLATED_CAUTION: string | Multilingual = {
 };
 
 export const WHATSAPP_PHONE = "40723222327";
+
+export const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61557876935991";
