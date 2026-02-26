@@ -2,6 +2,7 @@
 //logo image load
 import { Image } from "astro:assets";
 import adcsLogo from "@/assets/adcs-logo.jpg";
+import { FACEBOOK_URL } from "@/consts";
 
 //translation load
 import { useTranslations, type Lang } from "@/i18n";
@@ -31,7 +32,7 @@ const t = useTranslations(Astro.currentLocale as Lang);
     <ul class="logo-nav-actions">
       <li>
         <a
-          href="https://www.facebook.com/profile.php?id=61557876935991"
+          href={FACEBOOK_URL}
           target="_blank"
           rel="noopener noreferrer"
         >
