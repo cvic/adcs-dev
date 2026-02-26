@@ -1,0 +1,45 @@
+---
+interface Props {
+    href: string;
+    tabs?: string;
+    width?: number;
+    height?: number;
+    hideCover?: boolean;
+    showFacepile?: boolean;
+    smallHeader?: boolean;
+}
+
+const {
+    href,
+    tabs = "timeline",
+    width = 500,
+    height = 700,
+    hideCover = false,
+    showFacepile = true,
+    smallHeader = false,
+} = Astro.props;
+
+const params = new URLSearchParams({
+    href,
+    tabs,
+    width: String(width),
+    height: String(height),
+    small_header: String(smallHeader),
+    adapt_container_width: "true",
+    hide_cover: String(hideCover),
+    show_facepile: String(showFacepile),
+});
+
+const src = `https://www.facebook.com/plugins/page.php?${params}`;
+---
+
+<iframe
+    src={src}
+    width={width}
+    height={height}
+    style="border:none;overflow:hidden"
+    scrolling="no"
+    frameborder="0"
+    allowfullscreen="true"
+    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+></iframe>
