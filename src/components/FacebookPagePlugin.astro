@@ -12,7 +12,7 @@ interface Props {
 const {
     href,
     tabs = "timeline",
-    width = 500,
+    width = 700,
     height = 700,
     hideCover = false,
     showFacepile = true,
@@ -22,7 +22,7 @@ const {
 const params = new URLSearchParams({
     href,
     tabs,
-    width: String(width),
+    width: String(width ?? 500), // fallback for SSR
     height: String(height),
     small_header: String(smallHeader),
     adapt_container_width: "true",
@@ -32,14 +32,48 @@ const params = new URLSearchParams({
 
 const src = `https://www.facebook.com/plugins/page.php?${params}`;
 ---
-
+<div class="fb-container">
 <iframe
-    src={src}
-    width={width}
-    height={height}
-    style="border:none;overflow:hidden"
-    scrolling="no"
-    frameborder="0"
-    allowfullscreen="true"
-    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        id="fb-iframe"
+        data-href={href}
+        data-tabs={tabs}
+        data-height={height}
+        data-small-header={String(smallHeader)}
+        data-hide-cover={String(hideCover)}
+        data-show-facepile={String(showFacepile)}
+        src={src}
+        height={height}
+        style=""
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
 ></iframe>
+</div>
+
+<script is:inline>
+    const iframe = document.getElementById("fb-iframe");
+    const docWidth = document.body.clientWidth;
+
+    const params = new URLSearchParams({
+        href: iframe.dataset.href,
+        tabs: iframe.dataset.tabs,
+        width: String(docWidth),
+        height: iframe.dataset.height,
+        small_header: iframe.dataset.smallHeader,
+        adapt_container_width: "true",
+        hide_cover: iframe.dataset.hideCover,
+        show_facepile: iframe.dataset.showFacepile,
+    });
+
+    iframe.src = `https://www.facebook.com/plugins/page.php?${params}`;
+    iframe.width = String(docWidth);
+</script>
+
+<style>
+    .fb-container {
+        display: flex;
+        justify-content: center;
+        margin-left:-1rem
+    }
+</style>
